@@ -4,14 +4,57 @@ public class Mix {
 	//FIXME
 	//FIXME
 	//FIXME
-	private message = new LinkedList;
-}
+	private LinkedList message = new LinkedList();
+
+	private static String userMessage;
 
 
-public void main(String [] args) {
-	Mix.userMessage = "";
+	public void main(String [] args) {
+		Mix.userMessage = "";
+
+		for (int i = 0; i < args.length; i++) {
+			Mix.userMessage += args[i] + "";
+		}
+	}
+
 	
-	for (int i = 0; i < args.length; i++) {
-		Mix.userMessage += arg[i] + "";
+
+
+/**********************************************************************
+Q filename    means, quit! (Important, please print to the screen the final mixed up
+message when the program quits.) Also it means, to save off the set of undo commands into text file named "filename".  
+		b s # 		means, insert String “s”' at position #
+				(For example, b abc 3 would insert abc starting at position 3)
+		r # *		means, remove all the characters within the message, range # *
+				(for example: r 3 5  would start at position 3 and remove 3,4,5)	
+		H		Display a help page. 
+  	x #		You create a new command that does something to the message.
+		y # *		You create a new command that does something to the message.
+		z # * s		You create a new command that does something to the message.
+(For your three new creations, do not make them trivial, please be innovative.)
+	 *****************************************************************************/
+
+	/**********************************************************************
+	 *For b s #:
+	 *Inserts the string "s" at position # 
+	 **********************************************************************/
+	public void insertString() {
+
+	}
+
+	/**********************************************************************
+	 *For r # *
+	 *Removes all of the characters from # to *
+	 **********************************************************************/
+	public void removeChars() {
+
+	}
+
+	/**********************************************************************
+	 *Displays a page to help users learn how to enter their string 
+	 **********************************************************************/
+	public void H() {
+		System.out.println("Helpful message");
+
 	}
 }
