@@ -29,7 +29,7 @@ public class Mix {
 	
 
 
-	/**********************************************************************
+	/******************************************************************
 		Q filename    means, quit! (Important, please print to the screen the final mixed up
 		message when the program quits.) Also it means, to save off the set of 
 			undo commands into text file named "filename".  
@@ -42,20 +42,20 @@ public class Mix {
 		y # *		You create a new command that does something to the message.
 		z # * s		You create a new command that does something to the message.
 		(For your three new creations, do not make them trivial, please be innovative.)
-	 *****************************************************************************/
+	 *****************************************************************/
 
-	/**********************************************************************
+	/******************************************************************
 	 *For b s #:
 	 *Inserts the string "s" at position # 
-	 **********************************************************************/
+	 *****************************************************************/
 	public void insertString() {
 
 	}
 
-	/**********************************************************************
+	/******************************************************************
 	 *For r # *
 	 *Removes all of the characters from # to *
-	 **********************************************************************/
+	 *****************************************************************/
 	public void removeChars() {
 
 	}
