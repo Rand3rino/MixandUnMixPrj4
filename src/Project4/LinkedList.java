@@ -23,21 +23,53 @@ public class LinkedList {
 	public void append(String s) {
 
 		// Case 0: The list does not exist.
-		if (top == null)
+		if (top == null) {
 			addAtTop(s);
+			return;
+		}
 
 		// Case 1: at Least one item in list
 		else {
-
-			// code is not needed if using a tail
 			Node temp = top;
 			while (temp.getNext() != null)
 				temp = temp.getNext();
+				temp.setNext(new Node(s, temp.getNext()));
 		}
 
 	}
 
 	public boolean remove(String s) {
+		//case 1: no list
+		if(top == null)
+			return false;
+		
+		//case 2: 1 item and s is found
+		if(top.getData().equals(s) && top.getNext() == null) {
+			top = null;
+			return true;
+		}
+		
+		//case 3: 1 item and s is not found
+		if(!top.getData().equals(s) && top.getNext() == null)
+			return false;
+		
+		//case 4: multi-item and s is on top
+		if(top.getData().equals(s) && top.getNext() != null) {
+			top = top.getNext();
+			return true;
+		}
+		
+		//case 5: multi-item and s is not on top
+		Node temp = top;
+		while(temp.getNext() != null) {
+			if(temp.getNext().getData().equals(s)) {
+				temp.setNext(temp.getNext().getNext());
+				return true;
+			}
+			else
+				temp = temp.getNext();
+		}
+		
 		return false;
 	}
 
@@ -45,8 +77,7 @@ public class LinkedList {
 		while (remove(s))
 			;
 	}
-
-	// This method needs to be changed to handle the tail pointer
+	
 	public boolean insertAfter(int pos, String s) {
 		return false;
 	}
@@ -61,6 +92,7 @@ public class LinkedList {
 		list.append("donuts4");
 		list.append("chocolate5");
 		list.append("pizza3");
+
 
 		list.display();
 	}
