@@ -157,7 +157,6 @@ public class LinkedList {
 			// Direct the firstNode to the Second Node, 
 			// removing all in between.
 			firstNode.setNext(secondNode);
-			System.out.println("Here 160");
 			return true;
 		}
 		
@@ -268,7 +267,7 @@ public class LinkedList {
 	 * 
 	 * @return length The number of nodes in this Linked List.
 	 *****************************************************************/
-	private int lengthList() {
+	public int lengthList() {
 		
 		int length = 0;
 		Node temp = top;
