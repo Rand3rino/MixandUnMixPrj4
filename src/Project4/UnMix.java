@@ -7,7 +7,7 @@ public class UnMix {
 
 	/** FIXME */
 	private LinkedList message = new LinkedList();
-	
+
 	/** This is the input message */
 	private static String userMessage;
 
@@ -19,7 +19,7 @@ public class UnMix {
 		for (int i = 0; i < args.length; i++) {
 			UnMix.userMessage += args[i] + "";
 		}
-		
+
 		System.out.print ("Message:\n");
 		for (int i = 0; i < userMessage.length(); i++) 
 			System.out.format ("%3d", i);
@@ -29,7 +29,7 @@ public class UnMix {
 		System.out.format ("\n");
 
 	}
-	
+
 	public void scanFile(String filePath) {
 		String cmd;
 		Scanner scan = new Scanner(filePath);
@@ -37,14 +37,19 @@ public class UnMix {
 			cmd = scan.nextLine();
 
 			if(cmd.charAt(0) == 'A')
-				//FIXME needs to call ascii method
+				//FIXME needs to call ascii increment method
+				H();
 			if(Objects.equals(cmd, new String("b s #")))
 				insertString(cmd);
 			else if(Objects.equals(cmd, new String("r # *")))
 				removeChars(cmd);
+			else if(Objects.equals(cmd, new String("f")))
+				removeFerguson();
+			else if(Objects.equals(cmd, new String("s")))
+				undoReverseSwap();
 		}
 	}
-	
+
 	/******************************************************************
 		Q filename    means, quit! (Important, please print to the screen the final mixed up
 		message when the program quits.) Also it means, to save off the set of 
@@ -82,5 +87,48 @@ public class UnMix {
 	public void H() {
 		System.out.println("Helpful message");
 
+	}
+
+	public void incrAscii() {
+		message.incrAscii;
+	}
+
+	public void removeFerguson() {
+		message.removeFerguson();
+
+		//		int length = message.lengthList();
+		//		for(int i = 0; i < length; i++) {
+		//			//alternate letters
+		//			if(i % 2 == 0) {
+		//				removeSection(i,i);
+		//			}
+		//		}
+
+		//addFerguson
+		int length = lengthList();
+		Node prev = null;
+		Node next = top;
+		Node temp = null;
+		String name = "Ferguson";
+		for(int i = 0; i < length; i++) {
+			//alternate letters
+			if(i == 0) {
+				top = new Node(name.substring(0, 1), next);
+			}
+			else{
+				temp = new Node(name.substring(i, i+1), next);
+				prev.setNext();
+			}
+			
+			if(i < length - 1) {
+				prev = next;
+				next = next.getNext();
+			}
+		}
+	}
+
+
+	public void undoReverseSwap() {
+		message.undoReverseSwap();
 	}
 }
