@@ -31,35 +31,44 @@ public class LinkedList {
 		// Case 1: at Least one item in list
 		else {
 			Node temp = top;
-			while (temp.getNext() != null)
+			while (temp.getNext() != null) {
 				temp = temp.getNext();
-				temp.setNext(new Node(s, temp.getNext()));
+			}
+			temp.setNext(new Node(s, null));
 		}
 
 	}
 
+	/******************************************************************
+	 * This method will remove a node that is the first occurrence of 
+	 * the given string.
+	 * 
+	 * @param s The input string used for the search.
+	 * @return true if the removal is complete, false if not.
+	 *****************************************************************/
 	public boolean remove(String s) {
-		//case 1: no list
+		
+		// Case 0: There is no list.
 		if(top == null)
 			return false;
 		
-		//case 2: 1 item and s is found
+		// Case 1: There is 1 item and s is found.
 		if(top.getData().equals(s) && top.getNext() == null) {
 			top = null;
 			return true;
 		}
 		
-		//case 3: 1 item and s is not found
+		// Case 2: There is 1 item and s is not found.
 		if(!top.getData().equals(s) && top.getNext() == null)
 			return false;
 		
-		//case 4: multi-item and s is on top
+		// Case 3: There are multiple items and s is on top.
 		if(top.getData().equals(s) && top.getNext() != null) {
 			top = top.getNext();
 			return true;
 		}
 		
-		//case 5: multi-item and s is not on top
+		// Case 4: There are multiple items and s is not on top.
 		Node temp = top;
 		while(temp.getNext() != null) {
 			if(temp.getNext().getData().equals(s)) {
@@ -70,6 +79,7 @@ public class LinkedList {
 				temp = temp.getNext();
 		}
 		
+		// Default: A node could not be removed.
 		return false;
 	}
 
