@@ -19,24 +19,27 @@ public class Mix {
 			Mix.userMessage += args[i] + " ";
 		}
 		
+		for (int i = 0; i < userMessage.length(); i++)
+		message.append(userMessage.substring(i, i+1));
+		display();	
+		inputCommands();
+
+	}
+
+	private static void display() {
 		System.out.print ("Message:\n");
 		for (int i = 0; i < userMessage.length(); i++) { 
 			System.out.format ("%3d", i);
-			message.append(userMessage.substring(i, i+1));
+
 		}
 		System.out.format ("\n");
 		for (char c : userMessage.toCharArray()) 
 			System.out.format("%3c",c);
 		System.out.format ("\n");
-		
-		
-		
-		inputCommands();
-
 	}
 
 	private static void inputCommands() {
-		Scanner scnr = new Scanner(System.in);
+		Scanner scnr = new Scanner(System.in).useDelimiter("\\s*");
 		String command = "";
 		Mix mix = new Mix();
 		do {
@@ -107,8 +110,10 @@ public class Mix {
 	 *Inserts the string "s" at position # 
 	 *****************************************************************/
 	public void insertString(String s, int position) {
-		message.insertAfter(position, s);
-		//FIXME:Display message if returns false
+		boolean bool = message.insertAfter(position, s);
+		if(!bool)
+			System.out.println("Command could not be carried out.");
+		display();
 	}
 
 	/******************************************************************
@@ -116,7 +121,10 @@ public class Mix {
 	 *Removes all of the characters from # to *
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
-		
+		boolean bool = message.removeSection(startIndex, endIndex);
+		if(!bool)
+			System.out.println("Command could not be carried out.");
+		message.display();
 	}
 
 	/**********************************************************************
@@ -159,8 +167,8 @@ public class Mix {
 	}
 	
 	private void swapMessage() {
-		for(int i = 0; i < message.listLength/2; i++)
-			Collections.swap(message, i, message.listLength - i);
+		for(int i = 0; i < message.lenghtList/2; i++)
+			Collections.swap(message, i, message.lengthList - i);
 	}
 	
 	private void paste(int index, int clipboard) {
