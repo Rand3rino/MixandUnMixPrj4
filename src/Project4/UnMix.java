@@ -1,5 +1,8 @@
 package Project4;
 
+import java.util.Objects;
+import java.util.Scanner;
+
 public class UnMix {
 
 	/** FIXME */
@@ -27,6 +30,21 @@ public class UnMix {
 
 	}
 	
+	public void scanFile(String filePath) {
+		String cmd;
+		Scanner scan = new Scanner(filePath);
+		while(scan.hasNextLine()) {
+			cmd = scan.nextLine();
+
+			if(cmd.charAt(0) == 'A')
+				//FIXME needs to call ascii method
+			if(Objects.equals(cmd, new String("b s #")))
+				insertString(cmd);
+			else if(Objects.equals(cmd, new String("r # *")))
+				removeChars(cmd);
+		}
+	}
+	
 	/******************************************************************
 		Q filename    means, quit! (Important, please print to the screen the final mixed up
 		message when the program quits.) Also it means, to save off the set of 
@@ -46,7 +64,7 @@ public class UnMix {
 	 *For b s #:
 	 *Inserts the string "s" at position # 
 	 *****************************************************************/
-	public void insertString() {
+	public void insertString(String cmd) {
 
 	}
 
@@ -54,7 +72,7 @@ public class UnMix {
 	 *For r # *
 	 *Removes all of the characters from # to *
 	 *****************************************************************/
-	public void removeChars() {
+	public void removeChars(String cmd) {
 
 	}
 
