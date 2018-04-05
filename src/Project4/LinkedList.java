@@ -151,13 +151,12 @@ public class LinkedList {
 			
 			// Assign secondNode to the position after the cut.
 			for (int step = 0; step < end - start + 1; step++) {
-				secondNode = firstNode.getNext();
+				secondNode = secondNode.getNext();
 			}
 
 			// Direct the firstNode to the Second Node, 
 			// removing all in between.
 			firstNode.setNext(secondNode);
-			
 			return true;
 		}
 		
@@ -268,7 +267,7 @@ public class LinkedList {
 	 * 
 	 * @return length The number of nodes in this Linked List.
 	 *****************************************************************/
-	private int lengthList() {
+	public int lengthList() {
 		
 		int length = 0;
 		Node temp = top;
