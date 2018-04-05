@@ -279,4 +279,53 @@ public class LinkedList {
 		
 		return length;
 	}
+	
+	/******************************************************************
+	 * This method is used to remove Ferguson from the list
+	 *****************************************************************/
+	public void removeFerguson() {
+		//addFerguson
+				int length = lengthList();
+				Node prev = null;
+				Node next = top;
+				Node temp = null;
+				String name = "Ferguson";
+				for(int i = 0; i <= length; i++) {
+					//alternate letters
+					if(i == 0) {
+						top = new Node(name.substring(0, 1), next);
+					}
+					else{
+						temp = new Node(name.substring(i, i+1), next);
+						prev.setNext(temp);
+					}
+					
+					if(i < length) {
+						prev = next;
+						next = next.getNext();
+					}
+				}
+	}
+	
+	/******************************************************************
+	 * This method increments the ascii value of the character in each
+	 * node.
+	 *****************************************************************/
+	public void incrAscii() {
+		int length = lengthList();
+		Node temp = top;
+		for(int i = 0; i <= length; i++) {
+			char letter = (char)((char) temp.getData().charAt(0) + 1);
+			temp.setData(Character.toString(letter));
+			if(i < length)
+				temp = temp.getNext();
+		}
+	}
+	
+	/******************************************************************
+	 * This method undoes the reverse swap
+	 *****************************************************************/
+	public void undoReverseSwap() {
+		
+	}
 }

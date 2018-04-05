@@ -30,6 +30,11 @@ public class UnMix {
 
 	}
 
+	/******************************************************************
+	 * Scans in the file and calls the correct methods
+	 * 
+	 * @param filePath
+	 *****************************************************************/
 	public void scanFile(String filePath) {
 		String cmd;
 		Scanner scan = new Scanner(filePath);
@@ -89,10 +94,17 @@ public class UnMix {
 
 	}
 
+	/******************************************************************
+	 * This method increments the ascii value of the character stored
+	 * in each node
+	 *****************************************************************/
 	public void incrAscii() {
-		message.incrAscii;
+		message.incrAscii();
 	}
 
+	/******************************************************************
+	 * This method removes Ferguson from the string
+	 *****************************************************************/
 	public void removeFerguson() {
 		message.removeFerguson();
 
@@ -104,30 +116,13 @@ public class UnMix {
 		//			}
 		//		}
 
-		//addFerguson
-		int length = lengthList();
-		Node prev = null;
-		Node next = top;
-		Node temp = null;
-		String name = "Ferguson";
-		for(int i = 0; i < length; i++) {
-			//alternate letters
-			if(i == 0) {
-				top = new Node(name.substring(0, 1), next);
-			}
-			else{
-				temp = new Node(name.substring(i, i+1), next);
-				prev.setNext();
-			}
-			
-			if(i < length - 1) {
-				prev = next;
-				next = next.getNext();
-			}
-		}
+		
 	}
 
 
+	/******************************************************************
+	 * This method undoes the reverse swap
+	 *****************************************************************/
 	public void undoReverseSwap() {
 		message.undoReverseSwap();
 	}
