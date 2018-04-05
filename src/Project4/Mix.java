@@ -19,22 +19,31 @@ public class Mix {
 			Mix.userMessage += args[i] + " ";
 		}
 		
-		for (int i = 0; i < userMessage.length(); i++)
-		message.append(userMessage.substring(i, i+1));
+		System.out.print ("Message:\n");
+		for (int i = 0; i < userMessage.length(); i++) { 
+			System.out.format ("%3d", i);
+			message.append(userMessage.substring(i, i+1));
+		}
+		System.out.format ("\n");
+		for (char c : userMessage.toCharArray()) 
+			System.out.format("%3c",c);
+		System.out.format ("\n");
+		
 		display();	
 		inputCommands();
 
 	}
 
 	private static void display() {
+		//FIXME:Check if works
 		System.out.print ("Message:\n");
-		for (int i = 0; i < userMessage.length(); i++) { 
+		for (int i = 0; i < message.lengthList(); i++) { 
 			System.out.format ("%3d", i);
 
 		}
 		System.out.format ("\n");
-		for (char c : userMessage.toCharArray()) 
-			System.out.format("%3c",c);
+		for (int i = 0; i < message.lengthList(); i++)  
+			System.out.format("%3c", message.toString().charAt(i));
 		System.out.format ("\n");
 	}
 
