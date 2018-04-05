@@ -73,6 +73,103 @@ public class LinkedList {
 		return false;
 	}
 
+	/******************************************************************
+	 * This method will remove a section of the list. This will not
+	 * work if the list is outside the domain of the section.
+	 * 
+	 * @param start The beginning location of the cut.
+	 * @param end The final location of the cut.
+	 * @return true if the removal is complete, false if not.
+	 *****************************************************************/
+	public boolean removeSection(int start, int end) {
+		
+		// Invalid input. End cannot be before start.
+		if (start > end)
+			return false;
+		
+		// Invalid input. Section cannot be negative.
+		if (start < 0 || end < 0) 
+			return false;
+		
+		// Case 0: The list does not exist.
+		if (top == null)
+			return false;
+		
+		// Case 1: The list is not long enough.
+		if (lengthList() <= start)
+			return false;
+		
+		// Case 2: The list is only one and the insert is at zero.
+		if (lengthList() == 1 && start == 0) {
+			top = null;
+			return true;
+		}
+		
+		// Case 3: The list can be cut but there is no end section.
+		if (lengthList() > start && lengthList() - 1 <= end) {
+			
+			// This node will be used to move through the list.
+			Node temp = top;
+			
+			// Assign temp to the last position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				temp = temp.getNext();
+			}
+			
+			// Set the end of the list.
+			temp.setNext(null);
+			
+			return true;
+		}
+
+		// Case 4: The list can be cut and there is an end section.
+		if (lengthList() > start && lengthList() - 1 > end) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// This node is the top of the second part of the list.
+			Node secondNode;
+
+			// Assign firstNode to the position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				firstNode = firstNode.getNext();
+			}
+
+			// Start secondNode after firstNode.
+			secondNode = firstNode.getNext();
+			
+			// Assign secondNode to the position after the cut.
+			for (int step = 0; step < end - start + 1; step++) {
+				secondNode = firstNode.getNext();
+			}
+
+			// Direct the firstNode to the Second Node, 
+			// removing all in between.
+			firstNode.setNext(secondNode);
+			
+			return true;
+		}
+		
+		// Case 5: Remove a section that includes the first node.
+		if (start == 0) {
+			
+			// This node will be used to move through the list.
+			Node firstNode = top;
+			
+			// Assign the firstNode to the node after the cut.
+			for (int step = 0; step < end + 1; step++) {
+				firstNode = firstNode.getNext();
+			}
+			
+			// Assign the top of the list to the end of the cut.
+			top = firstNode;
+		}
+		
+		// Default: A section could not be removed.
+		return false;
+	}
+
 	public void removeAll(String s) {
 		while (remove(s))
 			;
@@ -84,6 +181,8 @@ public class LinkedList {
 	 * it will not be added. If the node can be added, it will shift 
 	 * all nodes after it by one.
 	 * 
+	 * @param pos The position where the node will be inserted.
+	 * @param s The string data for the inserted node.
 	 * @return true if the insert can be complete, false if not.
 	 *****************************************************************/
 	public boolean insertAfter(int pos, String s) {
@@ -93,11 +192,11 @@ public class LinkedList {
 			return false;
 		
 		// Case 1: The list is not long enough.
-		if (lengthList() < pos - 1)
+		if (lengthList() < pos - 2)
 			return false;
 		
 		// Case 2: The list is only one and the insert is at one.
-		if (lengthList() == 1 && pos == 1) {
+		if (lengthList() == 2 && pos == 1) {
 			
 			// Set the second position.
 			top.setNext(new Node(s, null));
@@ -105,7 +204,7 @@ public class LinkedList {
 		}
 		
 		// Case 3: The list is one short of the position.
-		if (lengthList() == pos - 1) {
+		if (lengthList() == pos) {
 			
 			// This node will be used to move through the list.
 			Node temp = top;
@@ -122,7 +221,7 @@ public class LinkedList {
 		}
 
 		// Case 4: The length matches or is greater than the position.
-		if (lengthList() >= pos) {
+		if (lengthList() > pos) {
 			
 			// This node will be used to move through the list.
 			Node firstNode = top;
@@ -169,19 +268,5 @@ public class LinkedList {
 		}
 		
 		return length;
-	}
-
-	public static void main(String[] args) {
-		LinkedList list = new LinkedList();
-
-		list.append("pizza0");
-		list.append("donuts1");
-		list.append("chocolate2");
-		list.append("pizza3");
-		list.append("donuts4");
-		list.append("chocolate5");
-		list.append("pizza3");
-
-		list.display();
 	}
 }
