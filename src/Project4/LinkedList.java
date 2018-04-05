@@ -151,13 +151,13 @@ public class LinkedList {
 			
 			// Assign secondNode to the position after the cut.
 			for (int step = 0; step < end - start + 1; step++) {
-				secondNode = firstNode.getNext();
+				secondNode = secondNode.getNext();
 			}
 
 			// Direct the firstNode to the Second Node, 
 			// removing all in between.
 			firstNode.setNext(secondNode);
-			
+			System.out.println("Here 160");
 			return true;
 		}
 		
