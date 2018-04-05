@@ -78,8 +78,97 @@ public class LinkedList {
 			;
 	}
 	
+	/******************************************************************
+	 * This method is used to insert a node into the list. If the node
+	 * that is to be inserted is not within the reaches of the list,
+	 * it will not be added. If the node can be added, it will shift 
+	 * all nodes after it by one.
+	 * 
+	 * @return true if the insert can be complete, false if not.
+	 *****************************************************************/
 	public boolean insertAfter(int pos, String s) {
+		
+		// Case 0: The list does not exist.
+		if (top == null)
+			return false;
+		
+		// Case 1: The list is not long enough.
+		if (lengthList() < pos - 1)
+			return false;
+		
+		// Case 2: The list is only one and the insert is at one.
+		if (lengthList() == 1 && pos == 1) {
+			
+			// Set the second position.
+			top.setNext(new Node(s, null));
+			return true;
+		}
+		
+		// Case 3: The list is one short of the position.
+		if (lengthList() == pos - 1) {
+			
+			// This node will be used to move through the list.
+			Node temp = top;
+			
+			// Assign temp to the last position of the list.
+			for (int step = 0; step < pos - 1; step++) {
+				temp = temp.getNext();
+			}
+			
+			// Add to the end of the list.
+			temp.setNext(new Node(s, null));
+			
+			return true;
+		}
+
+		// Case 4: The length matches or is greater than the position.
+		if (lengthList() >= pos) {
+			
+			// This node will be used to move through the list.
+			Node firstNode = top;
+			
+			// This node will be the top of the second part of the list.
+			Node secondNode;
+			
+			// This node will be inserted into the list.
+			Node insertNode;
+
+			// Assign firstNode to the position before the insert.
+			for (int step = 0; step < pos - 1; step++) {
+				firstNode = firstNode.getNext();
+			}
+			
+			// Assign secondNode to the position after the firstNode.
+			secondNode = firstNode.getNext();
+			
+			// Create the insertNode to point to the secondNode.
+			insertNode = new Node(s, secondNode);
+			
+			// Redirect the firstNode to point to the insertNode.
+			firstNode.setNext(insertNode);
+
+			return true;
+		}
+
+		// Default: Unable to insert node.
 		return false;
+	}
+	
+	/******************************************************************
+	 * This method is used to determine the length of the list.
+	 * 
+	 * @return length The number of nodes in this Linked List.
+	 *****************************************************************/
+	private int lengthList() {
+		
+		int length = 0;
+		Node temp = top;
+		while (temp != null) {
+			length++;
+			temp = temp.getNext();
+		}
+		
+		return length;
 	}
 
 	public static void main(String[] args) {
@@ -92,7 +181,6 @@ public class LinkedList {
 		list.append("donuts4");
 		list.append("chocolate5");
 		list.append("pizza3");
-
 
 		list.display();
 	}
