@@ -1,5 +1,6 @@
 package Project4;
 
+import java.io.*;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -10,6 +11,8 @@ public class Mix {
 	private static LinkedList message = new LinkedList();
 
 	private static String userMessage;
+	
+	private String commands = "";
 
 
 	public static void main(String [] args) {
@@ -29,7 +32,6 @@ public class Mix {
 			System.out.format("%3c",c);
 		System.out.format ("\n");
 		
-		display();	
 		inputCommands();
 
 	}
@@ -56,7 +58,12 @@ public class Mix {
 			switch(command) {
 			//quit and save to file
 			case "Q":
-				saveCommands();
+				System.out.println("Creating a file named 'KEY'.");
+				try {
+					mix.createFile(mix.commands);
+				} catch (IOException e) {
+					System.out.println("File could not be created");
+				}
 				break;
 			//insert string
 			case "b":
@@ -77,11 +84,11 @@ public class Mix {
 				break;
 			//insert ferguson
 			case "f":
-				mix.insertFerguson();
+			//	mix.insertFerguson();
 				break;
 			//swap message
 			case "s":
-				mix.swapMessage();
+			//	mix.swapMessage();
 				break;
 			//paste from clipboard
 			case "p":
@@ -119,11 +126,12 @@ public class Mix {
 	 *For b s #:
 	 *Inserts the string "s" at position # 
 	 *****************************************************************/
-	public void insertString(String s, int position) {
-		boolean bool = message.insertAfter(position, s);
-		if(!bool)
+	public void insertString(String s, int pos) {
+		boolean bool = message.insertAfter(pos, s);
+		if (!bool)
 			System.out.println("Command could not be carried out.");
-		display();
+		saveCommands("r " + pos + " " + pos);
+		message.display();
 	}
 
 	/******************************************************************
@@ -162,13 +170,18 @@ public class Mix {
 				+ "into clipboard(&).\n");
 	}
 
-	private static void saveCommands() {
-		// TODO Auto-generated method stub
-		
+	private void saveCommands(String str) {
+		commands += "," + str + commands;
+	}
+	
+	private void createFile(String instruction) throws IOException  {
+	    BufferedWriter writer = new BufferedWriter(new FileWriter("Key"));
+	    writer.write(instruction);
+	    writer.close();
 	}
 	
 	private void incrementAscii(char ascii) {
-		message.changeAscii(ascii);
+		//message.changeAscii(ascii);
 	}
 	
 	/******************************************************************
@@ -176,7 +189,7 @@ public class Mix {
 	 * every other character
 	 *****************************************************************/
 	private void removeFerguson() {
-		message.removeFerguson();
+		//message.removeFerguson();
 	}
 	
 	private void reverseList() {
