@@ -324,11 +324,16 @@ public class LinkedList {
 	 * This method increments the ascii value of the character in each
 	 * node.
 	 *****************************************************************/
-	public void incrAscii() {
+	public void changeAscii(char check) {
 		int length = lengthList();
 		Node temp = top;
+		int incrdecr;
+		if(check == '+')
+			incrdecr = 1;
+		else
+			incrdecr = -1;
 		for(int i = 0; i <= length; i++) {
-			char letter = (char)((char) temp.getData().charAt(0) + 1);
+			char letter = (char)((char) temp.getData().charAt(0) + incrdecr);
 			temp.setData(Character.toString(letter));
 			if(i < length)
 				temp = temp.getNext();
