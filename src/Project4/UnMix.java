@@ -23,69 +23,59 @@ public class UnMix {
 			UnMix.userMessage += args[i] + " ";
 		}
 
-		System.out.print ("Message:\n");
-		for (int i = 0; i < userMessage.length(); i++) 
-			System.out.format ("%3d", i);
-		System.out.format ("\n");
-		for (char c : userMessage.toCharArray()) 
-			System.out.format("%3c",c);
-		System.out.format ("\n");
+		System.out.println("Reading in File");
+//		System.out.print ("Message:\n");
+//		for (int i = 0; i < userMessage.length(); i++) 
+//			System.out.format ("%3d", i);
+//		System.out.format ("\n");
+//		for (char c : userMessage.toCharArray()) 
+//			System.out.format("%3c",c);
+//		System.out.format ("\n");
 
-		scanFile();
+		try {
+			scanFile();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: File Not Found");
+		}
 	}
 
 	/******************************************************************
 	 * Scans in the file and calls the correct methods
 	 * 
 	 * @param filePath
+	 * @throws FileNotFoundException 
 	 *****************************************************************/
-	public static void scanFile() {
+	public static void scanFile() throws FileNotFoundException {
 
-		// Path filePath = Paths.get("Key.txt");
-		String cmd = "r 8 8";
 		UnMix unmix = new UnMix();
-		Scanner scnr = new Scanner("Key");
 		File file = new File("Key");
+		Scanner scnr = new Scanner(file);
 		BufferedReader reader = null;
 
+		int scanIteration = 1;
 		try {
-			FileReader fileReader = new FileReader("Key");
-
-			// Always wrap FileReader in BufferedReader.
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-			while ((bufferedReader.readLine()) != null) {
-
-				// reader = new BufferedReader(new FileReader(file));
-				// cmd = null;
-				// // while (scnr.hasNextLine()) {
-				// cmd = scnr.nextLine();
-
-				// if(cmd.charAt(0) == 'A')
-				// //FIXME needs to call ascii increment method
-				// H();
-				// if(Objects.equals(cmd, new String("b s #")))
-				// insertString(cmd);
-
-				// FIXME
-				if (cmd.charAt(0) == 'r') {
-					// else if(Objects.equals(cmd, new String("r # #")))
-					// int x = Integer.valueOf(scnr.next());
-					// int y = Integer.valueOf(scnr.next());
-					unmix.removeChars(Integer.valueOf(cmd.charAt(2)), Integer.valueOf(cmd.charAt(4)));
+			while (scnr.hasNextLine()) {
+				
+				// The encrypted method is the first line of the file.
+				if (scanIteration == 1) {
+					//FIXME Handle where the message goes.
+					// usermessage = scnr.nextLine();
+					scnr.nextLine();
 				}
-				// else if(Objects.equals(cmd, new String("f")))
-				// removeFerguson();
-				// else if(Objects.equals(cmd, new String("s")))
-				// undoReverseSwap();
-				// scnr.close();
-				// }
+				
+				// These are the command statements.
+				else {
+				
+				// FIXME: We should try a method that parses out the command.
+				// parseCommand(scnr.nextLine());
+				System.out.println(scnr.nextLine());
+				}
+				
+				// Iterate count to the next line.
+				scanIteration++;
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		} 
+		finally {
 			try {
 				if (reader != null) {
 					reader.close();
@@ -93,6 +83,9 @@ public class UnMix {
 			} catch (IOException e) {
 			}
 		}
+		
+		// Done using the scanner.
+		scnr.close();
 
 	}
 
