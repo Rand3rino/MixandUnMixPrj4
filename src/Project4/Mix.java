@@ -171,7 +171,7 @@ public class Mix {
 	}
 
 	private void saveCommands(String str) {
-		commands += "," + str + commands;
+		commands = "\n"+ str + commands;
 	}
 	
 	private void createFile(String instruction) throws IOException  {
