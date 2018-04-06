@@ -72,7 +72,8 @@ public class Mix {
 				break;
 			//increment ascii values 
 			case "a":
-				mix.incrementAscii(scnr.next(), scnr.nextInt());
+				String s = scnr.next();
+				mix.incrementAscii(s.charAt(0));
 				break;
 			//insert ferguson
 			case "f":
@@ -166,8 +167,8 @@ public class Mix {
 		
 	}
 	
-	private void incrementAscii(String ascii) {
-		
+	private void incrementAscii(char ascii) {
+		message.changeAscii(ascii);
 	}
 	
 	/******************************************************************
