@@ -103,7 +103,7 @@ public class Mix {
 		Q filename    means, quit! (Important, please print to the screen the final mixed up
 		message when the program quits.) Also it means, to save off the set of 
 			undo commands into text file named "filename".  
-		b s # 		means, insert String “s”' at position #
+		b s # 		means, insert String ï¿½sï¿½' at position #
 				(For example, b abc 3 would insert abc starting at position 3)
 		r # *		means, remove all the characters within the message, range # *
 				(for example: r 3 5  would start at position 3 and remove 3,4,5)	

@@ -14,10 +14,18 @@ public class LinkedList {
 
 	public void display() {
 		Node temp = top;
-		while (temp != null) {
-			System.out.println(temp.getData());
+		
+		System.out.print ("Message:\n");
+		for (int i = 0; i < lengthList(); i++) { 
+			System.out.format ("%3d", i);
+
+		}
+		System.out.format ("\n");
+		for (int i = 0; i < lengthList(); i++)  {
+			System.out.format("%3c", temp.getData().charAt(0));
 			temp = temp.getNext();
 		}
+		System.out.format ("\n");
 	}
 
 	public void append(String s) {
@@ -115,7 +123,13 @@ public class LinkedList {
 			return true;
 		}
 		
-		// Case 3: The list can be cut but there is no end section.
+		// Case 3: User enters 0 0. Cut the top node.
+		if (start == 0 && end == 0) {
+			top = top.getNext();
+			return true;
+		}
+		
+		// Case 4: The list can be cut but there is no end section.
 		if (lengthList() > start && lengthList() - 1 <= end) {
 			
 			// This node will be used to move through the list.
@@ -132,7 +146,7 @@ public class LinkedList {
 			return true;
 		}
 
-		// Case 4: The list can be cut and there is an end section.
+		// Case 5: The list can be cut and there is an end section.
 		if (lengthList() > start && lengthList() - 1 > end) {
 
 			// This node will be used to move through the list.
@@ -160,7 +174,7 @@ public class LinkedList {
 			return true;
 		}
 		
-		// Case 5: Remove a section that includes the first node.
+		// Case 6: Remove a section that includes the first node.
 		if (start == 0) {
 			
 			// This node will be used to move through the list.
