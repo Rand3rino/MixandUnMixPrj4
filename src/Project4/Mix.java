@@ -64,7 +64,7 @@ public class Mix {
 				break;
 			//remove section
 			case "r":
-				mix.removeChars(scnr.nextInt(), scnr.nextInt());
+				mix.removeChars(Integer.valueOf(scnr.next()), Integer.valueOf(scnr.next()));
 				break;
 			//display help page
 			case "H":
@@ -166,18 +166,32 @@ public class Mix {
 		
 	}
 	
-	private void incrementAscii(String ascii, int num) {
-		// TODO Auto-generated method stub
+	private void incrementAscii(String ascii) {
 		
 	}
 	
-	private void insertFerguson() {
-		
+	/******************************************************************
+	 * This method removes the string "Ferguson" that is spaced out
+	 * every other character
+	 *****************************************************************/
+	private void removeFerguson() {
+		for(int i = 0; i <= length; i++) {
+			//alternate letters
+			if(i == 0) {
+				message.removeSection(0, 0);
+			}
+			else{
+				message.removeSection(i, i);
+			}
+		}
 	}
 	
-	private void swapMessage() {
-		for(int i = 0; i < message.lenghtList/2; i++)
-			Collections.swap(message, i, message.lengthList - i);
+	private void reverseList() {
+		for(int i = 0; i <= message.lengthList(); i++) {
+			
+		}
+			
+			
 	}
 	
 	private void paste(int index, int clipboard) {
