@@ -176,15 +176,7 @@ public class Mix {
 	 * every other character
 	 *****************************************************************/
 	private void removeFerguson() {
-		for(int i = 0; i <= length; i++) {
-			//alternate letters
-			if(i == 0) {
-				message.removeSection(0, 0);
-			}
-			else{
-				message.removeSection(i, i);
-			}
-		}
+		message.removeFerguson();
 	}
 	
 	private void reverseList() {
