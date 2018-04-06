@@ -280,9 +280,9 @@ public class LinkedList {
 	}
 	
 	/******************************************************************
-	 * This method is used to remove Ferguson from the list
+	 * This method is used to add Ferguson from the list
 	 *****************************************************************/
-	public void removeFerguson() {
+	public void addFerguson() {
 		//addFerguson
 				int length = lengthList();
 				Node prev = null;
