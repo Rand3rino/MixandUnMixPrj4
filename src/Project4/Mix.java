@@ -60,6 +60,7 @@ public class Mix {
 			case "Q":
 				System.out.println("Creating a file named 'KEY'.");
 				try {
+					System.out.println(mix.commands);
 					mix.createFile(mix.commands);
 				} catch (IOException e) {
 					System.out.println("File could not be created");
