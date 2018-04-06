@@ -14,7 +14,7 @@ public class LinkedList {
 
 	public void display() {
 		Node temp = top;
-		
+
 		System.out.print ("Message:\n");
 		for (int i = 0; i < lengthList(); i++) { 
 			System.out.format ("%3d", i);
@@ -55,27 +55,27 @@ public class LinkedList {
 	 * @return true if the removal is complete, false if not.
 	 *****************************************************************/
 	public boolean remove(String s) {
-		
+
 		// Case 0: There is no list.
 		if(top == null)
 			return false;
-		
+
 		// Case 1: There is 1 item and s is found.
 		if(top.getData().equals(s) && top.getNext() == null) {
 			top = null;
 			return true;
 		}
-		
+
 		// Case 2: There is 1 item and s is not found.
 		if(!top.getData().equals(s) && top.getNext() == null)
 			return false;
-		
+
 		// Case 3: There are multiple items and s is on top.
 		if(top.getData().equals(s) && top.getNext() != null) {
 			top = top.getNext();
 			return true;
 		}
-		
+
 		// Case 4: There are multiple items and s is not on top.
 		Node temp = top;
 		while(temp.getNext() != null) {
@@ -86,7 +86,7 @@ public class LinkedList {
 			else
 				temp = temp.getNext();
 		}
-		
+
 		// Default: A node could not be removed.
 		return false;
 	}
@@ -100,49 +100,49 @@ public class LinkedList {
 	 * @return true if the removal is complete, false if not.
 	 *****************************************************************/
 	public boolean removeSection(int start, int end) {
-		
+
 		// Invalid input. End cannot be before start.
 		if (start > end)
 			return false;
-		
+
 		// Invalid input. Section cannot be negative.
 		if (start < 0 || end < 0) 
 			return false;
-		
+
 		// Case 0: The list does not exist.
 		if (top == null)
 			return false;
-		
+
 		// Case 1: The list is not long enough.
 		if (lengthList() <= start)
 			return false;
-		
+
 		// Case 2: The list is only one and the insert is at zero.
 		if (lengthList() == 1 && start == 0) {
 			top = null;
 			return true;
 		}
-		
+
 		// Case 3: User enters 0 0. Cut the top node.
 		if (start == 0 && end == 0) {
 			top = top.getNext();
 			return true;
 		}
-		
+
 		// Case 4: The list can be cut but there is no end section.
 		if (lengthList() > start && lengthList() - 1 <= end) {
-			
+
 			// This node will be used to move through the list.
 			Node temp = top;
-			
+
 			// Assign temp to the last position before the cut.
 			for (int step = 0; step < start - 1; step++) {
 				temp = temp.getNext();
 			}
-			
+
 			// Set the end of the list.
 			temp.setNext(null);
-			
+
 			return true;
 		}
 
@@ -162,7 +162,7 @@ public class LinkedList {
 
 			// Start secondNode after firstNode.
 			secondNode = firstNode.getNext();
-			
+
 			// Assign secondNode to the position after the cut.
 			for (int step = 0; step < end - start + 1; step++) {
 				secondNode = secondNode.getNext();
@@ -173,22 +173,22 @@ public class LinkedList {
 			firstNode.setNext(secondNode);
 			return true;
 		}
-		
+
 		// Case 6: Remove a section that includes the first node.
 		if (start == 0) {
-			
+
 			// This node will be used to move through the list.
 			Node firstNode = top;
-			
+
 			// Assign the firstNode to the node after the cut.
 			for (int step = 0; step < end + 1; step++) {
 				firstNode = firstNode.getNext();
 			}
-			
+
 			// Assign the top of the list to the end of the cut.
 			top = firstNode;
 		}
-		
+
 		// Default: A section could not be removed.
 		return false;
 	}
@@ -197,7 +197,7 @@ public class LinkedList {
 		while (remove(s))
 			;
 	}
-	
+
 	/******************************************************************
 	 * This method is used to insert a node into the list. If the node
 	 * that is to be inserted is not within the reaches of the list,
@@ -209,49 +209,49 @@ public class LinkedList {
 	 * @return true if the insert can be complete, false if not.
 	 *****************************************************************/
 	public boolean insertAfter(int pos, String s) {
-		
+
 		// Case 0: The list does not exist.
 		if (top == null)
 			return false;
-		
+
 		// Case 1: The list is not long enough.
 		if (lengthList() < pos - 2)
 			return false;
-		
+
 		// Case 2: The list is only one and the insert is at one.
 		if (lengthList() == 2 && pos == 1) {
-			
+
 			// Set the second position.
 			top.setNext(new Node(s, null));
 			return true;
 		}
-		
+
 		// Case 3: The list is one short of the position.
 		if (lengthList() == pos) {
-			
+
 			// This node will be used to move through the list.
 			Node temp = top;
-			
+
 			// Assign temp to the last position of the list.
 			for (int step = 0; step < pos - 1; step++) {
 				temp = temp.getNext();
 			}
-			
+
 			// Add to the end of the list.
 			temp.setNext(new Node(s, null));
-			
+
 			return true;
 		}
 
 		// Case 4: The length matches or is greater than the position.
 		if (lengthList() > pos) {
-			
+
 			// This node will be used to move through the list.
 			Node firstNode = top;
-			
+
 			// This node will be the top of the second part of the list.
 			Node secondNode;
-			
+
 			// This node will be inserted into the list.
 			Node insertNode;
 
@@ -259,13 +259,13 @@ public class LinkedList {
 			for (int step = 0; step < pos - 1; step++) {
 				firstNode = firstNode.getNext();
 			}
-			
+
 			// Assign secondNode to the position after the firstNode.
 			secondNode = firstNode.getNext();
-			
+
 			// Create the insertNode to point to the secondNode.
 			insertNode = new Node(s, secondNode);
-			
+
 			// Redirect the firstNode to point to the insertNode.
 			firstNode.setNext(insertNode);
 
@@ -275,51 +275,70 @@ public class LinkedList {
 		// Default: Unable to insert node.
 		return false;
 	}
-	
+
 	/******************************************************************
 	 * This method is used to determine the length of the list.
 	 * 
 	 * @return length The number of nodes in this Linked List.
 	 *****************************************************************/
 	public int lengthList() {
-		
+
 		int length = 0;
 		Node temp = top;
 		while (temp != null) {
 			length++;
 			temp = temp.getNext();
 		}
-		
+
 		return length;
 	}
-	
+
 	/******************************************************************
-	 * This method is used to add Ferguson from the list
+	 * This method is used to add Ferguson to the list at every other
+	 * node
 	 *****************************************************************/
 	public void addFerguson() {
 		//addFerguson
-				int length = lengthList();
-				Node prev = null;
-				Node next = top;
-				Node temp = null;
-				String name = "Ferguson";
-				for(int i = 0; i <= length; i++) {
-					//alternate letters
-					if(i == 0) {
-						top = new Node(name.substring(0, 1), next);
-					}
-					else{
-						temp = new Node(name.substring(i, i+1), next);
-						prev.setNext(temp);
-					}
-					
-					if(i < length) {
-						prev = next;
-						next = next.getNext();
-					}
-				}
+		int length = lengthList();
+		Node prev = null;
+		Node next = top;
+		Node temp = null;
+		String name = "Ferguson";
+		for(int i = 0; i <= length; i++) {
+			//alternate letters
+			if(i == 0) {
+				top = new Node(name.substring(0, 1), next);
+			}
+			else{
+				temp = new Node(name.substring(i, i+1), next);
+				prev.setNext(temp);
+			}
+
+			if(i < length) {
+				prev = next;
+				next = next.getNext();
+			}
+		}
 	}
-	
+
+	/******************************************************************
+	 * This method removes the string Ferguson, which is alternated
+	 * every other node, from the list of nodes
+	 *****************************************************************/
+	public void removeFerguson() {
+		for(int i = 0; i <= lengthList(); i++) {
+			//alternate letters
+			if(i > 15)
+				break;
+			if(i == 0) {
+				removeSection(0, 0);
+			}
+			else{
+				removeSection(i, i);
+			}
+		}
+	}
+
 	/******************************************************************
 	 * This method increments the ascii value of the character in each
 	 * node.
@@ -339,11 +358,38 @@ public class LinkedList {
 				temp = temp.getNext();
 		}
 	}
+
+	/******************************************************************
+	 * This method takes the last half of the list and sets it as the
+	 * first half
+	 *****************************************************************/
+	public void halfNHalf() {
+		int length = lengthList();
+		Node temp = top;
+		for(int i = 0; i < length/2; i++) {
+			for(int check = 0; check < length; check++) {
+				temp = temp.getNext();
+			}
+			temp.setNext(top);
+			top = temp;	
+		}
+	}
+	
 	
 	/******************************************************************
-	 * This method undoes the reverse swap
+	 * This method takes the last half of the mixed up list and sets it
+	 * as the first half so that it undoes the method HalfNHalf, which
+	 * set the last part of the list as the first part
 	 *****************************************************************/
-	public void undoReverseSwap() {
-		
+	public void undoHalfNHalf() {
+		int length = lengthList();
+		Node temp = top;
+		for(int i = 0; i < Math.ceil(length/2); i++) {
+			for(int check = 0; check < length; check++) {
+				temp = temp.getNext();
+			}
+			temp.setNext(top);
+			top = temp;	
+		}
 	}
 }
