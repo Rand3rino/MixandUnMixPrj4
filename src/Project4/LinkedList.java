@@ -128,8 +128,14 @@ public class LinkedList {
 			top = top.getNext();
 			return true;
 		}
+		
+		//Case 4: Remove a section starting at 0 and having no end
+		if (start == 0 && lengthList() - 1 <= end) {
+			top = null;
+			return true;
+		}
 
-		// Case 4: The list can be cut but there is no end section.
+		// Case 5: The list can be cut but there is no end section.
 		if (lengthList() > start && lengthList() - 1 <= end) {
 
 			// This node will be used to move through the list.
@@ -145,8 +151,23 @@ public class LinkedList {
 
 			return true;
 		}
+		
+		// Case 6: Remove a section that includes the first node.
+		if (start == 0) {
 
-		// Case 5: The list can be cut and there is an end section.
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// Assign the firstNode to the node after the cut.
+			for (int step = 0; step < end+1; step++) {
+				firstNode = firstNode.getNext();
+			}
+
+			// Assign the top of the list to the end of the cut.
+			top = firstNode;
+		}
+
+		// Case 7: The list can be cut and there is an end section.
 		if (lengthList() > start && lengthList() - 1 > end) {
 
 			// This node will be used to move through the list.
@@ -174,20 +195,7 @@ public class LinkedList {
 			return true;
 		}
 
-		// Case 6: Remove a section that includes the first node.
-		if (start == 0) {
-
-			// This node will be used to move through the list.
-			Node firstNode = top;
-
-			// Assign the firstNode to the node after the cut.
-			for (int step = 0; step < end + 1; step++) {
-				firstNode = firstNode.getNext();
-			}
-
-			// Assign the top of the list to the end of the cut.
-			top = firstNode;
-		}
+		
 
 		// Default: A section could not be removed.
 		return false;
@@ -363,7 +371,7 @@ public class LinkedList {
 	 * This method takes the last half of the list and sets it as the
 	 * first half
 	 *****************************************************************/
-	public void halfNHalf() {
+	public void swapHalf() {
 		int length = lengthList();
 		Node temp = top;
 		for(int i = 0; i < length/2; i++) {
@@ -381,7 +389,7 @@ public class LinkedList {
 	 * as the first half so that it undoes the method HalfNHalf, which
 	 * set the last part of the list as the first part
 	 *****************************************************************/
-	public void undoHalfNHalf() {
+	public void undoSwapHalf() {
 		int length = lengthList();
 		Node temp = top;
 		for(int i = 0; i < Math.ceil(length/2); i++) {
