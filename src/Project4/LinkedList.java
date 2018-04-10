@@ -55,6 +55,8 @@ public class LinkedList {
 	 * @return true if the removal is complete, false if not.
 	 *****************************************************************/
 	public boolean remove(String s) {
+		//String to hold the removed characters
+		String removed;
 
 		// Case 0: There is no list.
 		if(top == null)
@@ -99,33 +101,37 @@ public class LinkedList {
 	 * @param end The final location of the cut.
 	 * @return true if the removal is complete, false if not.
 	 *****************************************************************/
-	public boolean removeSection(int start, int end) {
+	public String removeSection(int start, int end) {
+		String removed = "";
 
 		// Invalid input. End cannot be before start.
 		if (start > end)
-			return false;
+			return removed;
 
 		// Invalid input. Section cannot be negative.
 		if (start < 0 || end < 0) 
-			return false;
+			return removed;
 
 		// Case 0: The list does not exist.
 		if (top == null)
-			return false;
+			return removed;
 
 		// Case 1: The list is not long enough.
 		if (lengthList() <= start)
-			return false;
+			return removed;
 
 		// Case 2: The list is only one and the insert is at zero.
 		if (lengthList() == 1 && start == 0) {
+			removed = top.getData();
 			top = null;
-			return true;
+			return removed;
 		}
 
 		// Case 3: User enters 0 0. Cut the top node.
 		if (start == 0 && end == 0) {
+			removed = top.getData();
 			top = top.getNext();
+<<<<<<< HEAD
 			return true;
 		}
 		
@@ -134,6 +140,10 @@ public class LinkedList {
 			top = null;
 			return true;
 		}
+=======
+			return removed;
+			}
+>>>>>>> 13d0148d8f7eaca5dc8dba81780ff9265067cdfb
 
 		// Case 5: The list can be cut but there is no end section.
 		if (lengthList() > start && lengthList() - 1 <= end) {
@@ -145,11 +155,19 @@ public class LinkedList {
 			for (int step = 0; step < start - 1; step++) {
 				temp = temp.getNext();
 			}
+			
+			Node delete = temp;
+			
+			//Get the value of the last positions
+			for(int step = start; step <= end; step++) {
+				removed = removed + temp.getData();
+				temp = temp.getNext();
+			}
 
 			// Set the end of the list.
-			temp.setNext(null);
+			delete.setNext(null);
 
-			return true;
+			return removed;
 		}
 		
 		// Case 6: Remove a section that includes the first node.
@@ -178,7 +196,7 @@ public class LinkedList {
 
 			// Assign firstNode to the position before the cut.
 			for (int step = 0; step < start - 1; step++) {
-				firstNode = firstNode.getNext();
+				removed = removed + firstNode.getData();
 			}
 
 			// Start secondNode after firstNode.
@@ -186,19 +204,40 @@ public class LinkedList {
 
 			// Assign secondNode to the position after the cut.
 			for (int step = 0; step < end - start + 1; step++) {
+				removed = removed + secondNode.getData();
 				secondNode = secondNode.getNext();
 			}
 
 			// Direct the firstNode to the Second Node, 
 			// removing all in between.
 			firstNode.setNext(secondNode);
-			return true;
+			return removed;
 		}
 
+<<<<<<< HEAD
 		
+=======
+		// Case 6: Remove a section that includes the first node.
+		if (start == 0) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// Assign the firstNode to the node after the cut.
+			for (int step = 0; step < end + 1; step++) {
+				removed = removed + firstNode.getData();
+				firstNode = firstNode.getNext();
+			}
+
+			// Assign the top of the list to the end of the cut.
+			top = firstNode;
+			
+			return removed;
+		}
+>>>>>>> 13d0148d8f7eaca5dc8dba81780ff9265067cdfb
 
 		// Default: A section could not be removed.
-		return false;
+		return removed;
 	}
 
 	public void removeAll(String s) {
