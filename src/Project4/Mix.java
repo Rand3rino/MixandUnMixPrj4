@@ -141,7 +141,7 @@ public class Mix {
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
 		String removed = message.removeSection(startIndex, endIndex);
-		if(removed.length() > 0)
+		if(removed.length() == 0)
 			System.out.println("Command could not be carried out.");
 		saveCommands("b " + startIndex + " " + endIndex);
 		message.display();
@@ -209,7 +209,7 @@ public class Mix {
 	}
 	
 	private void unswapHalves() {
-		message.unswapHalf();
+		message.undoSwapHalf();
 	}
 	private void paste(int index, int clipboard) {
 		
