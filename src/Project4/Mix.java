@@ -85,11 +85,11 @@ public class Mix {
 				break;
 			//insert ferguson
 			case "f":
-			//	mix.insertFerguson();
+				mix.insertFerguson();
 				break;
 			//swap message
 			case "s":
-			//	mix.swapMessage();
+				mix.swapHalves();
 				break;
 			//paste from clipboard
 			case "p":
@@ -140,10 +140,10 @@ public class Mix {
 	 *Removes all of the characters from # to *
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
-		boolean bool = message.removeSection(startIndex, endIndex);
-		if(!bool)
+		String removed = message.removeSection(startIndex, endIndex);
+		if(removed.length() > 0)
 			System.out.println("Command could not be carried out.");
-		saveCommands("")
+		saveCommands("b " + startIndex + " " + endIndex);
 		message.display();
 	}
 
@@ -183,7 +183,7 @@ public class Mix {
 	}
 	
 	private void incrementAscii(char ascii) {
-		//message.changeAscii(ascii);
+		message.changeAscii(ascii);
 	}
 	
 	/******************************************************************
@@ -191,17 +191,26 @@ public class Mix {
 	 * every other character
 	 *****************************************************************/
 	private void removeFerguson() {
-		//message.removeFerguson();
+		message.removeFerguson();
+	}
+	
+	private void insertFerguson() {
+		message.addFerguson();
 	}
 	
 	private void reverseList() {
 		for(int i = 0; i <= message.lengthList(); i++) {
 			
 		}
-			
-			
 	}
 	
+	private void swapHalves() {
+		message.swapHalf();
+	}
+	
+	private void unswapHalves() {
+		message.unswapHalf();
+	}
 	private void paste(int index, int clipboard) {
 		
 	}
