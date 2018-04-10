@@ -131,22 +131,17 @@ public class LinkedList {
 		if (start == 0 && end == 0) {
 			removed = top.getData();
 			top = top.getNext();
-<<<<<<< HEAD
-			return true;
+			return removed;
 		}
 		
 		//Case 4: Remove a section starting at 0 and having no end
 		if (start == 0 && lengthList() - 1 <= end) {
 			top = null;
-			return true;
-		}
-=======
 			return removed;
-			}
->>>>>>> 13d0148d8f7eaca5dc8dba81780ff9265067cdfb
+		}			
 
 		// Case 5: The list can be cut but there is no end section.
-		if (lengthList() > start && lengthList() - 1 <= end) {
+		if(lengthList() > start && lengthList() - 1 <= end) {
 
 			// This node will be used to move through the list.
 			Node temp = top;
@@ -213,10 +208,7 @@ public class LinkedList {
 			firstNode.setNext(secondNode);
 			return removed;
 		}
-
-<<<<<<< HEAD
 		
-=======
 		// Case 6: Remove a section that includes the first node.
 		if (start == 0) {
 
@@ -234,7 +226,6 @@ public class LinkedList {
 			
 			return removed;
 		}
->>>>>>> 13d0148d8f7eaca5dc8dba81780ff9265067cdfb
 
 		// Default: A section could not be removed.
 		return removed;
