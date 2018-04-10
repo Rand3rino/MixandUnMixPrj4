@@ -50,7 +50,7 @@ public class Mix {
 	}
 
 	private static void inputCommands() {
-		Scanner scnr = new Scanner(System.in).useDelimiter("\\s*");
+		Scanner scnr = new Scanner(System.in).useDelimiter("\\s");
 		String command = "";
 		Mix mix = new Mix();
 		do {
@@ -143,6 +143,7 @@ public class Mix {
 		boolean bool = message.removeSection(startIndex, endIndex);
 		if(!bool)
 			System.out.println("Command could not be carried out.");
+		saveCommands("")
 		message.display();
 	}
 
