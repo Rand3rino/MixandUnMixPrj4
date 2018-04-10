@@ -9,28 +9,17 @@ import java.util.Scanner;
 public class UnMix {
 
 	/** FIXME */
-	private LinkedList message = new LinkedList();
+	private static LinkedList message = new LinkedList();
 
 	/** This is the input message */
-	private static String userMessage;
+	// FIXME Should this be static?
+	private static String userMessage = "";
 
-
+	private String commands = "";
 
 	public static void main(String [] args) {
-		UnMix.userMessage = "";
 
-		for (int i = 0; i < args.length; i++) {
-			UnMix.userMessage += args[i] + " ";
-		}
-
-		System.out.println("Reading in File");
-//		System.out.print ("Message:\n");
-//		for (int i = 0; i < userMessage.length(); i++) 
-//			System.out.format ("%3d", i);
-//		System.out.format ("\n");
-//		for (char c : userMessage.toCharArray()) 
-//			System.out.format("%3c",c);
-//		System.out.format ("\n");
+		System.out.println("Reading in File \n");
 
 		try {
 			scanFile();
@@ -47,7 +36,7 @@ public class UnMix {
 	 *****************************************************************/
 	public static void scanFile() throws FileNotFoundException {
 
-		UnMix unmix = new UnMix();
+		UnMix unMix = new UnMix();
 		File file = new File("Key");
 		Scanner scnr = new Scanner(file);
 		BufferedReader reader = null;
@@ -58,17 +47,35 @@ public class UnMix {
 				
 				// The encrypted method is the first line of the file.
 				if (scanIteration == 1) {
-					//FIXME Handle where the message goes.
-					// usermessage = scnr.nextLine();
-					scnr.nextLine();
+					
+					unMix.userMessage = scnr.nextLine();
+					
+					System.out.println(unMix.userMessage + " is the message");
+					
+					// A separate string variable is necessary.
+					String words = unMix.userMessage;
+					
+					UnMix.userMessage = "";
+					for (int i = 0; i < words.length(); i++)
+						UnMix.userMessage +=  words.charAt(i) + "";
+	
+					System.out.print ("Message:\n");
+					for (int i = 0; i < userMessage.length(); i++) { 
+						System.out.format ("%3d", i);
+						message.append(userMessage.substring(i, i+1));
+					}
+					
+					System.out.format ("\n");
+					for (char c : userMessage.toCharArray()) 
+						System.out.format("%3c",c);
+					System.out.format ("\n");
 				}
 				
 				// These are the command statements.
 				else {
-				
-				// FIXME: We should try a method that parses out the command.
-				// parseCommand(scnr.nextLine());
-				System.out.println(scnr.nextLine());
+					unMix.commands = scnr.nextLine();
+					System.out.println(unMix.commands);
+					unMix.inputCommands();
 				}
 				
 				// Iterate count to the next line.
@@ -77,10 +84,11 @@ public class UnMix {
 		} 
 		finally {
 			try {
-				if (reader != null) {
+				if (reader != null)
 					reader.close();
-				}
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
+				// FIXME Something happens here?
 			}
 		}
 		
@@ -89,6 +97,95 @@ public class UnMix {
 
 	}
 
+	private void inputCommands() {
+		UnMix unMix = new UnMix();
+		
+		Scanner scnr = new Scanner(this.commands).useDelimiter("\\s*");
+		
+		String command = scnr.next();
+				
+		switch (command) {
+		
+		// quit and save to file
+		case "Q":
+			System.out.println("Shutting Down.");
+			// System.exit();
+			break;
+			
+		// insert string
+		case "b":
+			unMix.insertString(scnr.next(), scnr.nextInt());
+			break;
+			
+		// remove section
+		case "r":
+			unMix.removeChars(Integer.valueOf(scnr.next()), 
+				Integer.valueOf(scnr.next()));
+			break;
+			
+		// display help page
+		case "H":
+			unMix.helpPage();
+			break;
+			
+		// increment ascii values
+		case "a":
+			String s = scnr.next();
+			unMix.incrementAscii(s.charAt(0));
+			break;
+			
+		// insert ferguson
+		case "f":
+			// mix.insertFerguson();
+			break;
+			
+		// swap message
+		case "s":
+			// mix.swapMessage();
+			break;
+		}
+		
+		// Done using the scanner.
+		scnr.close();
+	}
+	
+	private static void display() {
+		System.out.print ("\nMessage:\n");
+		for (int i = 0; i < userMessage.length(); i++) { 
+			System.out.format ("%3d", i);
+			message.append(userMessage.substring(i, i+1));
+		}
+		
+		System.out.format ("\n");
+		for (char c : userMessage.toCharArray()) 
+			System.out.format("%3c",c);
+		System.out.format ("\n");
+	}
+	
+	/**********************************************************************
+	 *Displays a page to help users learn how to enter their string 
+	 **********************************************************************/
+	public void helpPage() {
+		System.out.println("\n-------Help Page-------");
+		System.out.println("Q: Quits program");
+		System.out.println("b s #: Inserts a string(s) at "
+				+ "location(#).");
+		System.out.println("r # *: Deletes from index(#) to "
+				+ "index(*).");
+		System.out.println("H: Displays help page.");
+		System.out.println("a * #: Increments or Decrements(*) (#) "
+				+ "number of times where (#) is less than 5.");
+		System.out.println("f: Inserts ferguson between alternating "
+				+ "characters.");
+		System.out.println("s: Swaps the message around.");
+		System.out.println("p # &: Pastes from clipboard(&) at "
+				+ "location(#)");
+		System.out.println("c # % &: Copies from index(#) to index(%) "
+				+ "into clipboard(&).");
+		System.out.println("x # % &: Cuts from index(#) to index(%) "
+				+ "into clipboard(&).\n");
+	}
+	
 	/******************************************************************
 		Q filename    means, quit! (Important, please print to the screen the final mixed up
 		message when the program quits.) Also it means, to save off the set of 
@@ -134,36 +231,21 @@ public class UnMix {
 
 	}
 
-	/******************************************************************
-	 * This method increments the ascii value of the character stored
-	 * in each node
-	 *****************************************************************/
-	public void incrAscii() {
-	//	message.incrAscii();
+	private void incrementAscii(char ascii) {
+		//message.changeAscii(ascii);
 	}
-
+	
 	/******************************************************************
-	 * This method removes Ferguson from the string
+	 * This method removes the string "Ferguson" that is spaced out
+	 * every other character
 	 *****************************************************************/
-	public void removeFerguson() {
-		message.removeFerguson();
-
-		//		int length = message.lengthList();
-		//		for(int i = 0; i < length; i++) {
-		//			//alternate letters
-		//			if(i % 2 == 0) {
-		//				removeSection(i,i);
-		//			}
-		//		}
-
-		
+	private void removeFerguson() {
+		//message.removeFerguson();
 	}
-
-
-	/******************************************************************
-	 * This method undoes the reverse swap
-	 *****************************************************************/
-	public void undoReverseSwap() {
-		//message.undoReverseSwap();
+	
+	private void reverseList() {
+		for(int i = 0; i <= message.lengthList(); i++) {
+			
+		}
 	}
 }
