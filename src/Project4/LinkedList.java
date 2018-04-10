@@ -217,6 +217,7 @@ public class LinkedList {
 
 			// Assign the firstNode to the node after the cut.
 			for (int step = 0; step < end + 1; step++) {
+				//FIXME: Throws null pointer
 				removed = removed + firstNode.getData();
 				firstNode = firstNode.getNext();
 			}
