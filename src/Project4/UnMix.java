@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Project 4: UnMix
+ * 
+ * This class will decrypt a message that is entered through the
+ * command line, by reading instructions from a file and mutating a 
+ * Linked List.
+ *
+ * @author Randy Nguyen, Sam Ventocilla, and Jay Brunsting.
+ * @version April 17th, 2018.
+ *********************************************************************/
+
 package Project4;
 
 import java.io.*;
@@ -8,16 +19,30 @@ import java.util.Scanner;
 
 public class UnMix {
 
-	/** FIXME */
+	/** Linked List that holds the message */
 	private static LinkedList message = new LinkedList();
 
-	/** This is the input message */
-	// FIXME Should this be static?
-	private static String userMessage = "";
+	/** Input message */
+	private static String userMessage;
 
-	private String commands = "";
+	/** File name */
+	private static String fileName;
+	
+	/** Instruction from the file */
+	private String command;
 
+	/******************************************************************
+	 * This main method will read from the command line, the file name,
+	 * and the encrypted message. The message will be saved into a
+	 * Linked List that holds one character per node. Main will then
+	 * proceed to call the scanFile method which will decrypt the 
+	 * message.
+	 *  
+	 * @param args FIXME (file too)
+	 * 	The encrypted message that is entered in the command line.
+	 *****************************************************************/
 	public static void main(String [] args) {
+		UnMix.fileName = "Key";
 		UnMix.userMessage = "";
 
 		for (int i = 0; i < args.length; i++) {
@@ -37,7 +62,7 @@ public class UnMix {
 		try {
 			scanFile();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error: File Not Found");
+			System.out.println("Error: File Not Found\nSystem Close");
 		}
 	}
 
@@ -50,7 +75,7 @@ public class UnMix {
 	public static void scanFile() throws FileNotFoundException {
 
 		UnMix unMix = new UnMix();
-		File file = new File("Key");
+		File file = new File(UnMix.fileName);
 		Scanner scnr = new Scanner(file);
 		BufferedReader reader = null;
 
@@ -60,8 +85,8 @@ public class UnMix {
 				if (scanIteration == 1)
 					scnr.nextLine();
 				else {
-					unMix.commands = scnr.nextLine();
-					System.out.println(unMix.commands);
+					unMix.command = scnr.nextLine();
+					System.out.println(unMix.command);
 					unMix.inputCommands();
 				}
 				scanIteration++;
@@ -83,64 +108,61 @@ public class UnMix {
 	}
 
 	private void inputCommands() {
+
 		UnMix unMix = new UnMix();
-		
-		Scanner scnr = new Scanner(this.commands).useDelimiter("\\s");
-		
+
+		Scanner scnr = new Scanner(this.command).useDelimiter("\\s");
+
 		String command = scnr.next();
-				
+
 		switch (command) {
-		
-		// quit and save to file
-		case "Q":
-			System.out.println("Shutting Down.");
-			// System.exit();
-			break;
-			
-		// insert string
+
+		// Insert a section.
 		case "b":
 			unMix.insertString(scnr.next(), scnr.nextInt());
 			break;
-			
-		// remove section
+
+		// Remove a section.
 		case "r":
-			unMix.removeChars(Integer.valueOf(scnr.next()), 
-				Integer.valueOf(scnr.next()));
+			unMix.removeChars(Integer.valueOf(scnr.next()),
+					Integer.valueOf(scnr.next()));
 			break;
-			
-		// increment ascii values
+
+		// Decrement ascii values.
 		case "a":
 			String s = scnr.next();
-			unMix.incrementAscii(s.charAt(0));
+			unMix.decrementAscii(s.charAt(0));
 			break;
 			
-		// insert ferguson
+		// Remove ferguson.
 		case "f":
-			// mix.insertFerguson();
+			unMix.removeFerguson();
 			break;
 			
-		// swap message
+		// Unswap the message.
 		case "s":
-			// mix.swapMessage();
+			unMix.unswapHalves();
+			break;
+		
+		// Paste from clipboard.
+		case "p":
+			unMix.paste(scnr.nextInt(), scnr.nextInt());
+			break;
+			
+		// Copy to clipboard.
+		case "c":
+			unMix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
+			break;
+			
+		// Cut to clipboard.
+		case "x":
+			unMix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 			break;
 		}
-		
+
 		// Done using the scanner.
 		scnr.close();
 	}
-	
-//	private static void display() {
-//		System.out.print ("\nMessage:\n");
-//		for (int i = 0; i < userMessage.length(); i++) { 
-//			System.out.format ("%3d", i);
-//			message.append(userMessage.substring(i, i+1));
-//		}
-//		
-//		System.out.format ("\n");
-//		for (char c : userMessage.toCharArray()) 
-//			System.out.format("%3c",c);
-//		System.out.format ("\n");
-//	}
 	
 	/******************************************************************
 	 *For b s #:
@@ -164,8 +186,8 @@ public class UnMix {
 		message.display();
 	}
 
-	private void incrementAscii(char ascii) {
-		//message.changeAscii(ascii);
+	private void decrementAscii(char ascii) {
+		message.changeAscii(ascii);
 	}
 	
 	/******************************************************************
@@ -173,12 +195,22 @@ public class UnMix {
 	 * every other character
 	 *****************************************************************/
 	private void removeFerguson() {
-		//message.removeFerguson();
+		message.removeFerguson();
 	}
 	
-	private void reverseList() {
-		for(int i = 0; i <= message.lengthList(); i++) {
-			
-		}
+	private void unswapHalves() {
+		message.undoSwapHalf();
+	}
+	
+	private void paste(int index, int clipboard) {
+		
+	}
+	
+	private void copy(int startIndex, int endIndex, int clipboard) {
+		
+	}
+	
+	private void cut(int startIndex, int endIndex, int clipboard) {
+		
 	}
 }
