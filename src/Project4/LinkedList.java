@@ -6,7 +6,7 @@ public class LinkedList {
 	public LinkedList() {
 		top = null;
 	}
-	
+
 	public Node getTop() {
 		return top;
 	}
@@ -294,15 +294,15 @@ public class LinkedList {
 			// Assign secondNode to the end position of insert.
 			for(int i = 0; i < s.length(); i++) {
 				secondNode = firstNode.getNext();	
-			
-			// Create the insertNode to point to the secondNode.
-			insertNode = new Node(s.substring(i, i + 1), secondNode);
 
-			// Redirect the firstNode to point to the insertNode.
-			firstNode.setNext(insertNode);
-			firstNode = firstNode.getNext();
+				// Create the insertNode to point to the secondNode.
+				insertNode = new Node(s.substring(i, i + 1), secondNode);
+
+				// Redirect the firstNode to point to the insertNode.
+				firstNode.setNext(insertNode);
+				firstNode = firstNode.getNext();
 			}
-			
+
 			return true;
 		}
 
@@ -402,14 +402,24 @@ public class LinkedList {
 	 *****************************************************************/
 	public void swapHalf() {
 		int length = lengthList();
+		int half = length / 2;
 		Node temp = top;
-		for(int i = 0; i < length/2; i++) {
-			for(int check = 0; check < length; check++) {
-				temp = temp.getNext();
-			}
-			temp.setNext(top);
-			top = temp;	
+		Node delete;
+		Node swap;
+		for(int i = 0; i < half - 1; i++) {//goes to 2
+			temp = temp.getNext();
 		}
+		
+		delete = temp;
+		temp = temp.getNext();
+		swap = top;
+		top = temp;	
+		
+		for(int j = 0; j < length - half-1; j++) {
+			temp = temp.getNext();	
+		}
+		temp.setNext(swap);
+		delete.setNext(null);
 	}
 
 
@@ -419,6 +429,7 @@ public class LinkedList {
 	 * set the last part of the list as the first part
 	 *****************************************************************/
 	public void undoSwapHalf() {
+		//FIXME: doesnt work
 		int length = lengthList();
 		Node temp = top;
 		for(int i = 0; i < Math.ceil(length/2); i++) {
