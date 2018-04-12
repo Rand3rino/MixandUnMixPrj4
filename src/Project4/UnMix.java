@@ -1,9 +1,9 @@
 package Project4;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+//import java.util.Objects;
 import java.util.Scanner;
 
 public class UnMix {
@@ -18,9 +18,22 @@ public class UnMix {
 	private String commands = "";
 
 	public static void main(String [] args) {
+		UnMix.userMessage = "";
 
-		System.out.println("Reading in File \n");
-
+		for (int i = 0; i < args.length; i++) {
+			UnMix.userMessage += args[i] + " ";
+		}
+		
+		System.out.print ("Encrypted Message:\n");
+		for (int i = 0; i < userMessage.length(); i++) { 
+			System.out.format ("%3d", i);
+			message.append(userMessage.substring(i, i+1));
+		}
+		System.out.format ("\n");
+		for (char c : userMessage.toCharArray()) 
+			System.out.format("%3c",c);
+		System.out.format ("\n");
+		
 		try {
 			scanFile();
 		} catch (FileNotFoundException e) {
@@ -32,7 +45,7 @@ public class UnMix {
 	 * Scans in the file and calls the correct methods
 	 * 
 	 * @param filePath
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 *****************************************************************/
 	public static void scanFile() throws FileNotFoundException {
 
@@ -44,41 +57,13 @@ public class UnMix {
 		int scanIteration = 1;
 		try {
 			while (scnr.hasNextLine()) {
-				
-				// The encrypted method is the first line of the file.
-				if (scanIteration == 1) {
-					
-					unMix.userMessage = scnr.nextLine();
-					
-					System.out.println(unMix.userMessage + " is the message");
-					
-					// A separate string variable is necessary.
-					String words = unMix.userMessage;
-					
-					UnMix.userMessage = "";
-					for (int i = 0; i < words.length(); i++)
-						UnMix.userMessage +=  words.charAt(i) + "";
-	
-					System.out.print ("Message:\n");
-					for (int i = 0; i < userMessage.length(); i++) { 
-						System.out.format ("%3d", i);
-						message.append(userMessage.substring(i, i+1));
-					}
-					
-					System.out.format ("\n");
-					for (char c : userMessage.toCharArray()) 
-						System.out.format("%3c",c);
-					System.out.format ("\n");
-				}
-				
-				// These are the command statements.
+				if (scanIteration == 1)
+					scnr.nextLine();
 				else {
 					unMix.commands = scnr.nextLine();
 					System.out.println(unMix.commands);
 					unMix.inputCommands();
 				}
-				
-				// Iterate count to the next line.
 				scanIteration++;
 			}
 		} 
@@ -91,7 +76,7 @@ public class UnMix {
 				// FIXME Something happens here?
 			}
 		}
-		
+
 		// Done using the scanner.
 		scnr.close();
 
@@ -100,7 +85,7 @@ public class UnMix {
 	private void inputCommands() {
 		UnMix unMix = new UnMix();
 		
-		Scanner scnr = new Scanner(this.commands).useDelimiter("\\s*");
+		Scanner scnr = new Scanner(this.commands).useDelimiter("\\s");
 		
 		String command = scnr.next();
 				
@@ -121,11 +106,6 @@ public class UnMix {
 		case "r":
 			unMix.removeChars(Integer.valueOf(scnr.next()), 
 				Integer.valueOf(scnr.next()));
-			break;
-			
-		// display help page
-		case "H":
-			unMix.helpPage();
 			break;
 			
 		// increment ascii values
@@ -149,58 +129,19 @@ public class UnMix {
 		scnr.close();
 	}
 	
-	private static void display() {
-		System.out.print ("\nMessage:\n");
-		for (int i = 0; i < userMessage.length(); i++) { 
-			System.out.format ("%3d", i);
-			message.append(userMessage.substring(i, i+1));
-		}
-		
-		System.out.format ("\n");
-		for (char c : userMessage.toCharArray()) 
-			System.out.format("%3c",c);
-		System.out.format ("\n");
-	}
+//	private static void display() {
+//		System.out.print ("\nMessage:\n");
+//		for (int i = 0; i < userMessage.length(); i++) { 
+//			System.out.format ("%3d", i);
+//			message.append(userMessage.substring(i, i+1));
+//		}
+//		
+//		System.out.format ("\n");
+//		for (char c : userMessage.toCharArray()) 
+//			System.out.format("%3c",c);
+//		System.out.format ("\n");
+//	}
 	
-	/**********************************************************************
-	 *Displays a page to help users learn how to enter their string 
-	 **********************************************************************/
-	public void helpPage() {
-		System.out.println("\n-------Help Page-------");
-		System.out.println("Q: Quits program");
-		System.out.println("b s #: Inserts a string(s) at "
-				+ "location(#).");
-		System.out.println("r # *: Deletes from index(#) to "
-				+ "index(*).");
-		System.out.println("H: Displays help page.");
-		System.out.println("a * #: Increments or Decrements(*) (#) "
-				+ "number of times where (#) is less than 5.");
-		System.out.println("f: Inserts ferguson between alternating "
-				+ "characters.");
-		System.out.println("s: Swaps the message around.");
-		System.out.println("p # &: Pastes from clipboard(&) at "
-				+ "location(#)");
-		System.out.println("c # % &: Copies from index(#) to index(%) "
-				+ "into clipboard(&).");
-		System.out.println("x # % &: Cuts from index(#) to index(%) "
-				+ "into clipboard(&).\n");
-	}
-	
-	/******************************************************************
-		Q filename    means, quit! (Important, please print to the screen the final mixed up
-		message when the program quits.) Also it means, to save off the set of 
-		undo commands into text file named "filename".  
-		b s # 		means, insert String �s�' at position #
-			(For example, b abc 3 would insert abc starting at position 3)
-		r # *		means, remove all the characters within the message, range # *
-			(for example: r 3 5  would start at position 3 and remove 3,4,5)	
-		H		Display a help page. 
-		x #		You create a new command that does something to the message.
-		y # *		You create a new command that does something to the message.
-		z # * s		You create a new command that does something to the message.
-		(For your three new creations, do not make them trivial, please be innovative.)
-	 *****************************************************************/
-
 	/******************************************************************
 	 *For b s #:
 	 *Inserts the string "s" at position # 
@@ -217,18 +158,10 @@ public class UnMix {
 	 *Removes all of the characters from # to *
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
-		boolean bool = message.removeSection(startIndex, endIndex);
-		if(!bool)
+		String result = message.removeSection(startIndex, endIndex);
+		if(result.length() == 0)
 			System.out.println("Command could not be carried out.");
 		message.display();
-	}
-
-	/******************************************************************
-	 *Displays a page to help users learn how to enter their string 
-	 *****************************************************************/
-	public void H() {
-		System.out.println("Helpful message");
-
 	}
 
 	private void incrementAscii(char ascii) {
