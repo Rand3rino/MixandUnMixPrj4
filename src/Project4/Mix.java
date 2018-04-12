@@ -2,6 +2,7 @@ package Project4;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Mix {
@@ -11,7 +12,7 @@ public class Mix {
 	private static LinkedList message = new LinkedList();
 
 	private static String userMessage;
-	
+
 	private String commands = "";
 
 
@@ -21,7 +22,7 @@ public class Mix {
 		for (int i = 0; i < args.length; i++) {
 			Mix.userMessage += args[i] + " ";
 		}
-		
+
 		System.out.print ("Message:\n");
 		for (int i = 0; i < userMessage.length(); i++) { 
 			System.out.format ("%3d", i);
@@ -31,7 +32,7 @@ public class Mix {
 		for (char c : userMessage.toCharArray()) 
 			System.out.format("%3c",c);
 		System.out.format ("\n");
-		
+
 		inputCommands();
 
 	}
@@ -66,40 +67,52 @@ public class Mix {
 					System.out.println("File could not be created");
 				}
 				break;
-			//insert string
+				//insert string
 			case "b":
-				mix.insertString(scnr.next(), scnr.nextInt());
+				String words;
+				int toNum;
+				try {
+					words = scnr.next();
+					toNum = scnr.nextInt();
+				}
+				catch (NoSuchElementException e) {
+					System.out.println("Incorrect command, please ente"
+							+ "r b followed by separate numbers");
+					break;
+					
+				}
+				mix.insertString(words, toNum);
 				break;
-			//remove section
+				//remove section
 			case "r":
 				mix.removeChars(Integer.valueOf(scnr.next()), Integer.valueOf(scnr.next()));
 				break;
-			//display help page
+				//display help page
 			case "H":
 				mix.helpPage();
 				break;
-			//increment ascii values 
+				//increment ascii values 
 			case "a":
 				String s = scnr.next();
 				mix.incrementAscii(s.charAt(0));
 				break;
-			//insert ferguson
+				//insert ferguson
 			case "f":
 				mix.insertFerguson();
 				break;
-			//swap message
+				//swap message
 			case "s":
 				mix.swapHalves();
 				break;
-			//paste from clipboard
+				//paste from clipboard
 			case "p":
 				mix.paste(scnr.nextInt(), scnr.nextInt());
 				break;
-			//copy to clipboard
+				//copy to clipboard
 			case "c":
 				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
-			//cut to clipboard
+				//cut to clipboard
 			case "x":
 				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
@@ -175,17 +188,17 @@ public class Mix {
 	private void saveCommands(String str) {
 		commands = "\n"+ str + commands;
 	}
-	
+
 	private void createFile(String instruction) throws IOException  {
-	    BufferedWriter writer = new BufferedWriter(new FileWriter("Key"));
-	    writer.write(instruction);
-	    writer.close();
+		BufferedWriter writer = new BufferedWriter(new FileWriter("Key"));
+		writer.write(instruction);
+		writer.close();
 	}
-	
+
 	private void incrementAscii(char ascii) {
 		message.changeAscii(ascii);
 	}
-	
+
 	/******************************************************************
 	 * This method removes the string "Ferguson" that is spaced out
 	 * every other character
@@ -193,33 +206,34 @@ public class Mix {
 	private void removeFerguson() {
 		message.removeFerguson();
 	}
-	
+
 	private void insertFerguson() {
 		message.addFerguson();
+		message.display();
 	}
-	
+
 	private void reverseList() {
 		for(int i = 0; i <= message.lengthList(); i++) {
-			
+
 		}
 	}
-	
+
 	private void swapHalves() {
 		message.swapHalf();
 	}
-	
+
 	private void unswapHalves() {
 		message.undoSwapHalf();
 	}
 	private void paste(int index, int clipboard) {
-		
+
 	}
-	
+
 	private void copy(int startIndex, int endIndex, int clipboard) {
-		
+
 	}
-	
+
 	private void cut(int startIndex, int endIndex, int clipboard) {
-		
+
 	}
 }
