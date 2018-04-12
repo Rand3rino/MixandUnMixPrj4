@@ -6,6 +6,10 @@ public class LinkedList {
 	public LinkedList() {
 		top = null;
 	}
+	
+	public Node getTop() {
+		return top;
+	}
 
 	public void addAtTop(String s) {
 		top = new Node(s, top);
@@ -133,7 +137,7 @@ public class LinkedList {
 			top = top.getNext();
 			return removed;
 		}
-		
+
 		//Case 4: Remove a section starting at 0 and having no end
 		if (start == 0 && lengthList() - 1 <= end) {
 			top = null;
@@ -150,9 +154,9 @@ public class LinkedList {
 			for (int step = 0; step < start - 1; step++) {
 				temp = temp.getNext();
 			}
-			
+
 			Node delete = temp;
-			
+
 			//Get the value of the last positions
 			for(int step = start; step <= end; step++) {
 				removed = removed + temp.getData();
@@ -164,8 +168,9 @@ public class LinkedList {
 
 			return removed;
 		}
-		
-		// Case 6: Remove a section that includes the first node.
+
+		// Case 6: Remove a section starting at first node 
+		//and has an end.
 		if (start == 0) {
 
 			// This node will be used to move through the list.
@@ -192,6 +197,7 @@ public class LinkedList {
 			// Assign firstNode to the position before the cut.
 			for (int step = 0; step < start - 1; step++) {
 				removed = removed + firstNode.getData();
+				firstNode = firstNode.getNext();
 			}
 
 			// Start secondNode after firstNode.
@@ -206,25 +212,6 @@ public class LinkedList {
 			// Direct the firstNode to the Second Node, 
 			// removing all in between.
 			firstNode.setNext(secondNode);
-			return removed;
-		}
-		
-		// Case 6: Remove a section that includes the first node.
-		if (start == 0) {
-
-			// This node will be used to move through the list.
-			Node firstNode = top;
-
-			// Assign the firstNode to the node after the cut.
-			for (int step = 0; step < end + 1; step++) {
-				//FIXME: Throws null pointer
-				removed = removed + firstNode.getData();
-				firstNode = firstNode.getNext();
-			}
-
-			// Assign the top of the list to the end of the cut.
-			top = firstNode;
-			
 			return removed;
 		}
 
@@ -276,8 +263,12 @@ public class LinkedList {
 				temp = temp.getNext();
 			}
 
-			// Add to the end of the list.
-			temp.setNext(new Node(s, null));
+			//insert string at end of list
+			for(int i = 0; i < s.length(); i++) {
+				// Add to the end of the list.
+				temp.setNext(new Node(s.substring(i, i + 1), null));
+				temp = temp.getNext();
+			}
 
 			return true;
 		}
@@ -299,15 +290,19 @@ public class LinkedList {
 				firstNode = firstNode.getNext();
 			}
 
-			// Assign secondNode to the position after the firstNode.
-			secondNode = firstNode.getNext();
-
+			//secondNode = firstNode.getNext();
+			// Assign secondNode to the end position of insert.
+			for(int i = 0; i < s.length(); i++) {
+				secondNode = firstNode.getNext();	
+			
 			// Create the insertNode to point to the secondNode.
-			insertNode = new Node(s, secondNode);
+			insertNode = new Node(s.substring(i, i + 1), secondNode);
 
 			// Redirect the firstNode to point to the insertNode.
 			firstNode.setNext(insertNode);
-
+			firstNode = firstNode.getNext();
+			}
+			
 			return true;
 		}
 
@@ -344,18 +339,21 @@ public class LinkedList {
 		Node temp = null;
 		String name = "Ferguson";
 		for(int i = 0; i <= length; i++) {
-			//alternate letters
-			if(i == 0) {
-				top = new Node(name.substring(0, 1), next);
-			}
-			else{
-				temp = new Node(name.substring(i, i+1), next);
-				prev.setNext(temp);
-			}
+			//if length is twice as long as name
+			if(i < 8) {
+				//alternate letters
+				if(i == 0) {
+					top = new Node(name.substring(0, 1), next);
+				}
+				else{
+					temp = new Node(name.substring(i, i+1), next);
+					prev.setNext(temp);
+				}
 
-			if(i < length) {
-				prev = next;
-				next = next.getNext();
+				if(i < length) {
+					prev = next;
+					next = next.getNext();
+				}
 			}
 		}
 	}
@@ -413,8 +411,8 @@ public class LinkedList {
 			top = temp;	
 		}
 	}
-	
-	
+
+
 	/******************************************************************
 	 * This method takes the last half of the mixed up list and sets it
 	 * as the first half so that it undoes the method HalfNHalf, which
