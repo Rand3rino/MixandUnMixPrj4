@@ -52,7 +52,7 @@ public class Mix {
 
 	private static void inputCommands() {
 		Scanner scnr = new Scanner(System.in).useDelimiter("\\s");
-		String command = "";
+		String command;
 		Mix mix = new Mix();
 		do {
 			command = scnr.next();
