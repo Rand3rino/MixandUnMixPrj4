@@ -97,7 +97,7 @@ public class Mix {
 				s = scnr.next();
 				try {
 					//checkfor false
-					if(!(mix.incrementAscii(s.charAt(0)))
+					if(!(mix.incrementAscii(s.charAt(0))))
 							throw new StringIndexOutOfBoundsException();
 				}
 				catch(StringIndexOutOfBoundsException e) {
@@ -209,8 +209,8 @@ public class Mix {
 		writer.close();
 	}
 
-	private void incrementAscii(char ascii) {
-		message.changeAscii(ascii);
+	private boolean incrementAscii(char ascii) {
+		return message.changeAscii(ascii);
 	}
 
 	private void paste(int index, int clipboard) {
