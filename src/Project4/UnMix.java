@@ -23,7 +23,7 @@ public class UnMix {
 	private static String userMessage = "";
 
 	/** File name */
-	private static String fileName;
+	private static String fileName = "";
 	
 	/** Instruction from the file */
 	private String command;
@@ -38,41 +38,65 @@ public class UnMix {
 	 * proceed to call the scanFile method which will decrypt the 
 	 * message.
 	 *  
-	 * @param args FIXME (file too)
-	 * 	The encrypted message that is entered in the command line.
+	 * @param args This is the input from the command line that 
+	 * 	includes the filename and the encrypted message in the format:
+	 *  filename 'encrypted message'.
 	 *****************************************************************/
-	public static void main(String [] args) {
-		
-		//FIXME filename will not default to key
-		UnMix.fileName = "Key";
+	public static void main(String [] args) { // FIXME throws IOException?  {
+
+		// The filename is the first string of args.
+		UnMix.fileName += args[0];
 
 		// Add the message with spaces between each character.
-		for (int i = 0; i < args.length; i++)
+		for (int i = 1; i < args.length; i++)
 			UnMix.userMessage += args[i] + " ";
-		
-		System.out.print ("Encrypted Message:\n");
-		
-		// Print a number line that is evenly spaced.
-		for (int i = 0; i < userMessage.length(); i++) { 
-			System.out.format ("%3d", i);
-			message.append(userMessage.substring(i, i+1));
-		}
-		
-		// Print each character evenly spaced below each number.
-		System.out.format ("\n");
-		for (char c : userMessage.toCharArray()) 
-			System.out.format("%3c",c);
-		System.out.format ("\n");
-		
+
+		// Remove the ' at the beginning, ' and space at the end.
+		UnMix.userMessage = UnMix.userMessage.substring
+				(1, UnMix.userMessage.length() - 2) + " ";
+
+		// Display the initial information.
+		display();
+
 		// Proceed to read the file.
 		try {
 			scanFile();
-		} 
+		}
 		
 		// Quit if there was an error reading the file.
 		catch (FileNotFoundException e) {
 			System.out.println("Error: File Not Found\nSystem Close");
 		}
+		
+		// Decryption finished.
+		finally {
+			System.out.println("\nDone!");
+		}
+	}
+
+	/******************************************************************
+	 * This display method helps the main method by displaying all 
+	 * necessary information when the program begins.
+	 *****************************************************************/
+	private static void display() {
+		
+		// Print out the filename.
+		System.out.println("This is the filename: " + UnMix.fileName);
+		
+		// Print out the encrypted message.
+		System.out.print("Encrypted Message:\n");
+
+		// Print the correct amount of numbers evenly spaced.
+		for (int num = 0; num < userMessage.length() - 1; num++) {
+			System.out.format("%3d", num);
+			message.append(userMessage.substring(num, num + 1));
+		}
+
+		// Print each character evenly spaced below each number.
+		System.out.format("\n");
+		for (char c : userMessage.toCharArray())
+			System.out.format("%3c", c);
+		System.out.format("\n");
 	}
 
 	/******************************************************************
@@ -83,6 +107,7 @@ public class UnMix {
 	 *****************************************************************/
 	public static void scanFile() throws FileNotFoundException {
 
+		// Instantiate a new scanner that will read from the file.
 		Scanner scnr = new Scanner(new File(UnMix.fileName));
 		BufferedReader reader = null;
 
@@ -98,12 +123,11 @@ public class UnMix {
 				if (scansComplete == 0)
 					scnr.nextLine();
 				
-				
 				else {
 					
 					// Save and print the top line of the file.
 					unMix.command = scnr.nextLine();
-					System.out.println(unMix.command);
+					System.out.println("\nCommand: " + unMix.command);
 					
 					// Complete the instruction of the command.
 					unMix.inputCommands();
@@ -113,6 +137,7 @@ public class UnMix {
 				scansComplete++;
 			}
 		} 
+		
 		finally {
 			try {
 				if (reader != null)
@@ -125,7 +150,6 @@ public class UnMix {
 
 		// Finished with this scanner.
 		scnr.close();
-
 	}
 
 	/******************************************************************
