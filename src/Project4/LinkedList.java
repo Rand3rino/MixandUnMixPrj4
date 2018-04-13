@@ -335,7 +335,7 @@ public class LinkedList {
 			temp = temp.getNext();
 		}
 
-		return length - 1;
+		return length;
 	}
 
 	/******************************************************************
@@ -397,34 +397,39 @@ public class LinkedList {
 		int incrdecr;
 		if(check == '+') {
 			incrdecr = 1;
-			
+
 			//check if list is past ascii index
 			for(int i = 0; i < this.lengthList(); i++) {
-				if((int)temp.getData().charAt(0) == 126) 
+				if((int)temp.getData().charAt(0) > 125) 
 					return false;
 				temp = temp.getNext();
 			}
 		}
-		else {
+		else{
 			incrdecr = -1;
-			
+
 			//check if list is past ascii index
 			for(int i = 0; i < this.lengthList(); i++) {
-				if((int)temp.getData().charAt(0) == 33) 
-					return false;
+				if((int)temp.getData().charAt(0) != 32) {
+					if((int)temp.getData().charAt(0) == 33) 
+						return false;
+				}
 				temp = temp.getNext();
 			}
 		}
 
 		Node temp1 = top;
-		
+
 		for(int i = 0; i <= length-1; i++) {
-			char letter = (char)((char) temp1.getData().charAt(0) + incrdecr);
-			temp1.setData(Character.toString(letter));
+			if((int)temp1.getData().charAt(0) != 32) {
+				char letter = (char)((char) temp1.getData().charAt(0) + incrdecr);
+				temp1.setData(Character.toString(letter));
+			}
 			if(i < length)
 				temp1 = temp1.getNext();
+
 		}
-		
+
 		return true;
 	}
 
@@ -453,7 +458,7 @@ public class LinkedList {
 		temp.setNext(swap);
 		delete.setNext(null);
 	}
-	
+
 	public void unSwapHalf() {
 		int length = lengthList();
 		int half = (int)Math.ceil((double)length / 2);
