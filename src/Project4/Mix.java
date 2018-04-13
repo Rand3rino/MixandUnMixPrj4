@@ -21,7 +21,7 @@ public class Mix {
 		}
 
 		System.out.print ("Message:\n");
-		for (int i = 0; i < userMessage.length(); i++) { 
+		for (int i = 0; i < userMessage.length() - 1; i++) { 
 			System.out.format ("%3d", i);
 			message.append(userMessage.substring(i, i+1));
 		}
@@ -37,6 +37,8 @@ public class Mix {
 	private static void inputCommands() {
 		Scanner scnr = new Scanner(System.in).useDelimiter("\\s");
 		String command;
+		String words;
+		int toNum, toNum2;
 		Mix mix = new Mix();
 		do {
 			command = scnr.next();
@@ -53,23 +55,36 @@ public class Mix {
 				break;
 				//insert string
 			case "b":
-				String words;
-				int toNum;
 				try {
 					words = scnr.next();
 					toNum = scnr.nextInt();
 				}
 				catch (NoSuchElementException e) {
 					System.out.println("Incorrect command, please ente"
-							+ "r b followed by separate numbers");
+							+ "r 'b' followed by a string and the inde"
+							+ "x at which you would like the string in"
+							+ "erted.\nNote that the index must be with"
+							+ "in the length of the string");
 					break;
-					
+
 				}
 				mix.insertString(words, toNum);
 				break;
 				//remove section
 			case "r":
-				mix.removeChars(Integer.valueOf(scnr.next()), Integer.valueOf(scnr.next()));
+
+				try {
+					toNum = scnr.nextInt();
+					toNum2 = scnr.nextInt();
+				}
+				catch (NoSuchElementException e) {
+					System.out.println("Incorrect command. Please"
+							+ " enter 'r' followed by separate numbers"
+							+ " that are within 0 and the length of"
+							+ "the string");
+					break;
+				}
+				mix.removeChars(toNum, toNum2);
 				break;
 				//display help page
 			case "H":
@@ -77,8 +92,19 @@ public class Mix {
 				break;
 				//increment ascii values 
 			case "a":
-				String s = scnr.next();
-				mix.incrementAscii(s.charAt(0));
+				String s;
+
+				s = scnr.next();
+				try {
+					//checkfor false
+					if(!(mix.incrementAscii(s.charAt(0)))
+							throw new StringIndexOutOfBoundsException();
+				}
+				catch(StringIndexOutOfBoundsException e) {
+					System.out.println("Incorrect command. Please enter 'a'"
+							+ " followed by either '+' or '-'");
+					break;
+				}
 				break;
 				//insert ferguson
 			case "f":
@@ -100,7 +126,12 @@ public class Mix {
 			case "x":
 				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
+			default:
+				System.out.println("Please enter a valid command. "
+						+ "Press 'H' for Help");
+				break;
 			}
+
 			scnr.nextLine();
 			message.display();
 		}while(!command.equals("Q"));
@@ -181,7 +212,7 @@ public class Mix {
 	private void incrementAscii(char ascii) {
 		message.changeAscii(ascii);
 	}
-	
+
 	private void paste(int index, int clipboard) {
 
 	}
