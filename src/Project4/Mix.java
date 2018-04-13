@@ -6,9 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Mix {
-	//FIXME
-	//FIXME
-	//FIXME
 	private static LinkedList message = new LinkedList();
 
 	private static String userMessage;
@@ -35,19 +32,6 @@ public class Mix {
 
 		inputCommands();
 
-	}
-
-	private static void display() {
-		//FIXME:Check if works
-		System.out.print ("Message:\n");
-		for (int i = 0; i < message.lengthList(); i++) { 
-			System.out.format ("%3d", i);
-
-		}
-		System.out.format ("\n");
-		for (int i = 0; i < message.lengthList(); i++)  
-			System.out.format("%3c", message.toString().charAt(i));
-		System.out.format ("\n");
 	}
 
 	private static void inputCommands() {
@@ -98,11 +82,11 @@ public class Mix {
 				break;
 				//insert ferguson
 			case "f":
-				mix.insertFerguson();
+				message.addFerguson();
 				break;
 				//swap message
 			case "s":
-				mix.swapHalves();
+				message.swapHalf();
 				break;
 				//paste from clipboard
 			case "p":
@@ -117,7 +101,8 @@ public class Mix {
 				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
 			}
-
+			scnr.nextLine();
+			message.display();
 		}while(!command.equals("Q"));
 	}
 
@@ -145,7 +130,6 @@ public class Mix {
 		if (!bool)
 			System.out.println("Command could not be carried out.");
 		saveCommands("r " + pos + " " + pos);
-		message.display();
 	}
 
 	/******************************************************************
@@ -157,7 +141,6 @@ public class Mix {
 		if(removed.length() == 0)
 			System.out.println("Command could not be carried out.");
 		saveCommands("b " + startIndex + " " + endIndex);
-		message.display();
 	}
 
 	/**********************************************************************
@@ -198,33 +181,7 @@ public class Mix {
 	private void incrementAscii(char ascii) {
 		message.changeAscii(ascii);
 	}
-
-	/******************************************************************
-	 * This method removes the string "Ferguson" that is spaced out
-	 * every other character
-	 *****************************************************************/
-	private void removeFerguson() {
-		message.removeFerguson();
-	}
-
-	private void insertFerguson() {
-		message.addFerguson();
-		message.display();
-	}
-
-	private void reverseList() {
-		for(int i = 0; i <= message.lengthList(); i++) {
-
-		}
-	}
-
-	private void swapHalves() {
-		message.swapHalf();
-	}
-
-	private void unswapHalves() {
-		message.undoSwapHalf();
-	}
+	
 	private void paste(int index, int clipboard) {
 
 	}
