@@ -244,11 +244,22 @@ public class LinkedList {
 		if (lengthList() < pos - 2)
 			return false;
 
-		// Case 2: The list is only one and the insert is at one.
-		if (lengthList() == 2 && pos == 1) {
+		// Case 2: Insert at position 0.
+		if (pos == 0) {
+			Node temp = top;
+			Node temp1;
 
-			// Set the second position.
-			top.setNext(new Node(s, null));
+			//add first node
+			addAtTop(s.substring(0, 1));
+			temp1 = top;
+
+			// add s to end of list
+			for(int i = 1; i < s.length(); i++) {
+				temp1.setNext(new Node(s.substring(i, i+1), null));
+				temp1 = temp1.getNext();
+			}
+
+			temp1.setNext(temp);
 			return true;
 		}
 
@@ -324,7 +335,7 @@ public class LinkedList {
 			temp = temp.getNext();
 		}
 
-		return length;
+		return length - 1;
 	}
 
 	/******************************************************************
@@ -380,20 +391,41 @@ public class LinkedList {
 	 * This method increments the ascii value of the character in each
 	 * node.
 	 *****************************************************************/
-	public void changeAscii(char check) {
+	public boolean changeAscii(char check) {
 		int length = lengthList();
 		Node temp = top;
 		int incrdecr;
-		if(check == '+')
+		if(check == '+') {
 			incrdecr = 1;
-		else
-			incrdecr = -1;
-		for(int i = 0; i <= length; i++) {
-			char letter = (char)((char) temp.getData().charAt(0) + incrdecr);
-			temp.setData(Character.toString(letter));
-			if(i < length)
+			
+			//check if list is past ascii index
+			for(int i = 0; i < this.lengthList(); i++) {
+				if((int)temp.getData().charAt(0) == 126) 
+					return false;
 				temp = temp.getNext();
+			}
 		}
+		else {
+			incrdecr = -1;
+			
+			//check if list is past ascii index
+			for(int i = 0; i < this.lengthList(); i++) {
+				if((int)temp.getData().charAt(0) == 33) 
+					return false;
+				temp = temp.getNext();
+			}
+		}
+
+		Node temp1 = top;
+		
+		for(int i = 0; i <= length-1; i++) {
+			char letter = (char)((char) temp1.getData().charAt(0) + incrdecr);
+			temp1.setData(Character.toString(letter));
+			if(i < length)
+				temp1 = temp1.getNext();
+		}
+		
+		return true;
 	}
 
 	/******************************************************************
@@ -409,12 +441,34 @@ public class LinkedList {
 		for(int i = 0; i < half - 1; i++) {//goes to 2
 			temp = temp.getNext();
 		}
-		
+
 		delete = temp;
 		temp = temp.getNext();
 		swap = top;
 		top = temp;	
-		
+
+		for(int j = 0; j < length - half-1; j++) {
+			temp = temp.getNext();	
+		}
+		temp.setNext(swap);
+		delete.setNext(null);
+	}
+	
+	public void unSwapHalf() {
+		int length = lengthList();
+		int half = (int)Math.ceil((double)length / 2);
+		Node temp = top;
+		Node delete;
+		Node swap;
+		for(int i = 0; i < half - 1; i++) {//goes to 2
+			temp = temp.getNext();
+		}
+
+		delete = temp;
+		temp = temp.getNext();
+		swap = top;
+		top = temp;	
+
 		for(int j = 0; j < length - half-1; j++) {
 			temp = temp.getNext();	
 		}
