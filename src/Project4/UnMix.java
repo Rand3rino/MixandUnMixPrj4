@@ -27,6 +27,9 @@ public class UnMix {
 	
 	/** Instruction from the file */
 	private String command;
+	
+	/** FIXME NAME THIS */
+	private static UnMix unMix = new UnMix();
 
 	/******************************************************************
 	 * This main method will read from the command line, the file name,
@@ -80,10 +83,7 @@ public class UnMix {
 	 *****************************************************************/
 	public static void scanFile() throws FileNotFoundException {
 
-		//FIXME
-		UnMix unMix = new UnMix();
-		File file = new File(UnMix.fileName);
-		Scanner scnr = new Scanner(file);
+		Scanner scnr = new Scanner(new File(UnMix.fileName));
 		BufferedReader reader = null;
 
 		// Use this variable to count the number of loops.
@@ -134,9 +134,6 @@ public class UnMix {
 	 *****************************************************************/
 	private void inputCommands() {
 
-		//FIXME
-		UnMix unMix = new UnMix();
-
 		// This scanner reads the command, stopping at each space.
 		Scanner scnr = new Scanner(this.command).useDelimiter("\\s");
 
@@ -163,14 +160,14 @@ public class UnMix {
 			unMix.decrementAscii(s.charAt(0));
 			break;
 			
-		// Remove ferguson.
+		// Remove the name Ferguson characters at every other node.
 		case "f":
-			unMix.removeFerguson();
+			message.removeFerguson();
 			break;
 			
-		// Unswap the message.
+		// Swap the first half of the list with the second.
 		case "s":
-			unMix.unswapHalves();
+			message.swapHalf();
 			break;
 		
 		// Paste from clipboard.
@@ -189,6 +186,9 @@ public class UnMix {
 			break;
 		}
 
+		// Print the current message.
+		message.display();
+		
 		// Done using the scanner.
 		scnr.close();
 	}
@@ -202,15 +202,9 @@ public class UnMix {
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
 		
-		// Linked List will return if the change was completed.
-		boolean bool = message.insertAfter(pos, s);
-		
-		// The change was not complete. Print an error message.
-		if (!bool)
-			System.out.println("Command could not be carried out.");
-		
-		// Print the current message.
-		message.display();
+		// Insert not complete. Print an error message.
+		if (!message.insertAfter(pos, s))
+			System.out.println("Command Incomplete.");
 	}
 
 	/******************************************************************
@@ -221,16 +215,10 @@ public class UnMix {
 	 * @param endIndex   The ending node location.
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
-		
-		// Linked List will return a string if there was a cut.
-		String result = message.removeSection(startIndex, endIndex);
-		
+	
 		// There is no string. Print an error message.
-		if (result == null)
-			System.out.println("Command could not be carried out.");
-		
-		// Print the current message.
-		message.display();
+		if (message.removeSection(startIndex, endIndex) == null)
+			System.out.println("Command Incomplete");
 	}
 
 	/******************************************************************
@@ -238,20 +226,6 @@ public class UnMix {
 	 *****************************************************************/
 	private void decrementAscii(char ascii) {
 		message.changeAscii(ascii);
-	}
-	
-	/******************************************************************
-	 * FIXME
-	 *****************************************************************/
-	private void removeFerguson() {
-		message.removeFerguson();
-	}
-	
-	/******************************************************************
-	 * FIXME
-	 *****************************************************************/
-	private void unswapHalves() {
-		message.undoSwapHalf();
 	}
 	
 	/******************************************************************
