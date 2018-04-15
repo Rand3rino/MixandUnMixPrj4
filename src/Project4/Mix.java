@@ -1,43 +1,62 @@
+/**********************************************************************
+ * Project 4: Mix
+ * 
+ * This class will encrypt a message that is entered through the
+ * command line, by reading instructions from the user input and 
+ * mutating a Linked List.
+ *
+ * @author Randy Nguyen, Sam Ventocilla, and Jay Brunsting.
+ * @version April 17th, 2018.
+ *********************************************************************/
+
 package Project4;
 
 import java.io.*;
-import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Mix {
+	
+	/** Variable for the linked list. */
 	private static LinkedList message = new LinkedList();
 
+	/** String to hold the users message from the command prompt. */
 	private static String userMessage;
 
+	/** String to take in user commands. */
 	private String commands = "";
 
 
+	/******************************************************************
+	 * Main method to read in the users message, add it to the linked
+	 * list and then print it and call method to read in user input for
+	 * encryption commands.
+	 * 
+	 * @param args String array that holds message from the command 
+	 * 				line.
+	 *****************************************************************/
 	public static void main(String [] args) {
 		Mix.userMessage = "";
 
+		//add command message to string userMessage
 		for (int i = 0; i < args.length; i++) {
 			Mix.userMessage += args[i] + " ";
 		}
 
-		System.out.print ("Message:\n");
-		for (int i = 0; i < userMessage.length() - 1; i++) { 
-			System.out.format ("%3d", i);
+		//adds string userMessage to linked list
+		for (int i = 0; i < userMessage.length() - 1; i++)
 			message.append(userMessage.substring(i, i+1));
-		}
-		System.out.format ("\n");
-		for (char c : userMessage.toCharArray()) 
-			System.out.format("%3c",c);
-		System.out.format ("\n");
 
+		message.display();
 		inputCommands();
-
 	}
 
+	/******************************************************************
+	 * Method to read in commands from user to encrypt message.
+	 *****************************************************************/
 	private static void inputCommands() {
 		Scanner scnr = new Scanner(System.in).useDelimiter("\\s");
-		String command;
-		String words;
+		String command, words;
 		int toNum, toNum2;
 		Mix mix = new Mix();
 		do {
@@ -53,7 +72,7 @@ public class Mix {
 					System.out.println("File could not be created");
 				}
 				break;
-				//insert string
+			//insert string
 			case "b":
 				try {
 					words = scnr.next();
@@ -70,7 +89,7 @@ public class Mix {
 				}
 				mix.insertString(words, toNum);
 				break;
-				//remove section
+			//remove section
 			case "r":
 
 				try {
@@ -86,11 +105,11 @@ public class Mix {
 				}
 				mix.removeChars(toNum, toNum2);
 				break;
-				//display help page
+			//display help page
 			case "H":
 				mix.helpPage();
 				break;
-				//increment ascii values 
+			//increment ascii values 
 			case "a":
 				String s;
 
@@ -106,23 +125,23 @@ public class Mix {
 					break;
 				}
 				break;
-				//insert ferguson
+			//insert ferguson
 			case "f":
 				message.addFerguson();
 				break;
-				//swap message
+			//swap message
 			case "s":
-				message.swapHalf();
+				message.SwapHalf();
 				break;
-				//paste from clipboard
+			//paste from clipboard
 			case "p":
 				mix.paste(scnr.nextInt(), scnr.nextInt());
 				break;
-				//copy to clipboard
+			//copy to clipboard
 			case "c":
 				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
-				//cut to clipboard
+			//cut to clipboard
 			case "x":
 				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
@@ -138,23 +157,11 @@ public class Mix {
 	}
 
 	/******************************************************************
-		Q filename    means, quit! (Important, please print to the screen the final mixed up
-		message when the program quits.) Also it means, to save off the set of 
-			undo commands into text file named "filename".  
-		b s # 		means, insert String �s�' at position #
-				(For example, b abc 3 would insert abc starting at position 3)
-		r # *		means, remove all the characters within the message, range # *
-				(for example: r 3 5  would start at position 3 and remove 3,4,5)	
-		H		Display a help page. 
-  		x #		You create a new command that does something to the message.
-		y # *		You create a new command that does something to the message.
-		z # * s		You create a new command that does something to the message.
-		(For your three new creations, do not make them trivial, please be innovative.)
-	 *****************************************************************/
-
-	/******************************************************************
-	 *For b s #:
-	 *Inserts the string "s" at position # 
+	 *Method for the b command which inserts a string at the given 
+	 *position.
+	 *
+	 *@param s String to be inserted.
+	 *@param pos Position to insert string into linked list.
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
 		boolean bool = message.insertAfter(pos, s);
@@ -164,8 +171,11 @@ public class Mix {
 	}
 
 	/******************************************************************
-	 *For r # *
-	 *Removes all of the characters from # to *
+	 *Method to handle the r command that removes a section of the 
+	 *linked list starting and ending at a given index.
+	 *
+	 *@param startIndex Index to begin cutting out.
+	 *@param endIndex Index to end cutting out.
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
 		String removed = message.removeSection(startIndex, endIndex);
@@ -175,7 +185,8 @@ public class Mix {
 	}
 
 	/**********************************************************************
-	 *Displays a page to help users learn how to enter their string 
+	 *Displays a page to help users learn how to enter their encryption
+	 *commands.
 	 **********************************************************************/
 	public void helpPage() {
 		System.out.println("\n-------Help Page-------");
@@ -199,28 +210,66 @@ public class Mix {
 				+ "into clipboard(&).\n");
 	}
 
+	/******************************************************************
+	*Method to save the encryption commands to be later used in the 
+	*UnMix program.
+	*
+	*@param str String to hold the encryption commands.
+	******************************************************************/
 	private void saveCommands(String str) {
 		commands = "\n"+ str + commands;
 	}
 
+	/******************************************************************
+	*Method that creates the file to hold encryption commands.
+	*
+	*@param instruction Encryption commands to be stored.
+	******************************************************************/
 	private void createFile(String instruction) throws IOException  {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("Key"));
 		writer.write(instruction);
 		writer.close();
 	}
 
+	/******************************************************************
+	*Method to increment the ascii value of the character sent.
+	*
+	*@param ascii Character to be incremented
+	*@return boolean Returns true if action performed else false.
+	******************************************************************/
 	private boolean incrementAscii(char ascii) {
 		return message.changeAscii(ascii);
 	}
 
+	/******************************************************************
+	*Method to paste given clipboard into linked list at given index.
+	*
+	*@param index Location to paste clipboard into.
+	*@param clipboard Clipboard to be pasted into linked list.
+	******************************************************************/
 	private void paste(int index, int clipboard) {
 
 	}
 
+	/******************************************************************
+	*Method to copy from linked list into a clipboard.
+	*
+	*@param startIndex Index in linked list to begin copying from.
+	*@param endIndex Index in linked list to end copying from.
+	*@param clipboard Clipboard to paste message into.
+	******************************************************************/
 	private void copy(int startIndex, int endIndex, int clipboard) {
 
 	}
 
+	/******************************************************************
+	*Method to cut section from linked list and paste it into the 
+	*clipboard.
+	*
+	*@param startIndex Index to begin cutting from in linked list.
+	*@param endIndex Index to end cutting from in linked list.
+	*@param clipboard Clipboard to paste cut section in.
+	******************************************************************/
 	private void cut(int startIndex, int endIndex, int clipboard) {
 
 	}

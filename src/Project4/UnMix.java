@@ -10,25 +10,24 @@
  *********************************************************************/
 
 package Project4;
-
 import java.io.*;
 import java.util.Scanner;
 
 public class UnMix {
 
-	/** Linked List that holds the message */
+	/** Linked List that holds the message. */
 	private static LinkedList message = new LinkedList();
 
-	/** Input message */
+	/** Input message from command prompt. */
 	private static String userMessage = "";
 
-	/** File name */
+	/** File name where decryption codes are saved. */
 	private static String fileName = "";
 	
-	/** Instruction from the file */
+	/** Instruction from the file. */
 	private String command;
 	
-	/** FIXME NAME THIS */
+	/** UnMix object to call methods from the main with. */
 	private static UnMix unMix = new UnMix();
 
 	/******************************************************************
@@ -191,7 +190,7 @@ public class UnMix {
 			
 		// Swap the first half of the list with the second.
 		case "s":
-			message.swapHalf();
+			message.UnSwapHalf();
 			break;
 		
 		// Paste from clipboard.

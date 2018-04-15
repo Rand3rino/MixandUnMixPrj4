@@ -1,21 +1,50 @@
+/**********************************************************************
+ * Project 4: LinkedList
+ * 
+ * This is the linked list class that contains all the commands to 
+ * the message to encrypt and decrypt it.
+ *
+ * @author Randy Nguyen, Sam Ventocilla, and Jay Brunsting.
+ * @version April 17th, 2018.
+ *********************************************************************/
+
 package Project4;
 
 public class LinkedList {
+	
+	/** The top node of the linked list. */
 	private Node top;
 
+	/******************************************************************
+	 * Constructor for LinkedList that sets top to null.
+	 *****************************************************************/
 	public LinkedList() {
 		top = null;
 	}
 
+	/******************************************************************
+	 * Get method that returns the top node.
+	 * 
+	 * @return The top node of the linked list.
+	 *****************************************************************/
 	public Node getTop() {
 		return top;
 	}
 
+	/******************************************************************
+	 * Method to add to the top of the linked list.
+	 * 
+	 * @param s Data to set the top as.
+	 *****************************************************************/
 	public void addAtTop(String s) {
 		top = new Node(s, top);
 
 	}
 
+	/******************************************************************
+	 * Method to print out the linked list in a formatted version with
+	 * the number of the position above each node.
+	 *****************************************************************/
 	public void display() {
 		Node temp = top;
 
@@ -32,6 +61,12 @@ public class LinkedList {
 		System.out.format ("\n");
 	}
 
+	/******************************************************************
+	 * Method to add a string to the end of the linked list.
+	 * 
+	 * @param s Data of type string to be added to end of the linked 
+	 * 			list.
+	 *****************************************************************/
 	public void append(String s) {
 
 		// Case 0: The list does not exist.
@@ -56,7 +91,7 @@ public class LinkedList {
 	 * the given string.
 	 * 
 	 * @param s The input string used for the search.
-	 * @return true if the removal is complete, false if not.
+	 * @return True if the removal is complete, false if not.
 	 *****************************************************************/
 	public boolean remove(String s) {
 		//String to hold the removed characters
@@ -219,20 +254,15 @@ public class LinkedList {
 		return removed;
 	}
 
-	public void removeAll(String s) {
-		while (remove(s))
-			;
-	}
-
 	/******************************************************************
 	 * This method is used to insert a node into the list. If the node
 	 * that is to be inserted is not within the reaches of the list,
 	 * it will not be added. If the node can be added, it will shift 
-	 * all nodes after it by one.
+	 * all nodes after it by the length of s.
 	 * 
 	 * @param pos The position where the node will be inserted.
 	 * @param s The string data for the inserted node.
-	 * @return true if the insert can be complete, false if not.
+	 * @return True if the insert can be complete, false if not.
 	 *****************************************************************/
 	public boolean insertAfter(int pos, String s) {
 
@@ -339,10 +369,11 @@ public class LinkedList {
 	}
 
 	/******************************************************************
-	 * This method is used to add Ferguson to the list at every other
+	 * This method is used to add "Ferguson" to the list at every other
 	 * node
 	 *****************************************************************/
 	public void addFerguson() {
+		
 		//addFerguson
 		int length = lengthList();
 		Node prev = null;
@@ -390,7 +421,11 @@ public class LinkedList {
 	/******************************************************************
 	 * This method increments the ascii value of the character in each
 	 * node.
-	 *****************************************************************/
+	 * 
+	 * @param check Character value to be incremented
+	 * @return A boolean that is true if ascii value is incremented and
+	 * 			false if it was unable to increment.
+	 ******************************************************************/
 	public boolean changeAscii(char check) {
 		int length = lengthList();
 		Node temp = top;
@@ -420,6 +455,7 @@ public class LinkedList {
 
 		Node temp1 = top;
 
+		//increment each node that is not a space
 		for(int i = 0; i <= length-1; i++) {
 			if((int)temp1.getData().charAt(0) != 32) {
 				char letter = (char)((char) temp1.getData().charAt(0) + incrdecr);
@@ -427,7 +463,6 @@ public class LinkedList {
 			}
 			if(i < length)
 				temp1 = temp1.getNext();
-
 		}
 
 		return true;
@@ -437,13 +472,15 @@ public class LinkedList {
 	 * This method takes the last half of the list and sets it as the
 	 * first half
 	 *****************************************************************/
-	public void swapHalf() {
+	public void SwapHalf() {
 		int length = lengthList();
 		int half = length / 2;
 		Node temp = top;
 		Node delete;
 		Node swap;
-		for(int i = 0; i < half - 1; i++) {//goes to 2
+		
+		//sets temp as the middle node
+		for(int i = 0; i < half - 1; i++) {
 			temp = temp.getNext();
 		}
 
@@ -459,13 +496,20 @@ public class LinkedList {
 		delete.setNext(null);
 	}
 
-	public void unSwapHalf() {
+	/******************************************************************
+	 * This method takes the last half of the mixed up list and sets it
+	 * as the first half so that it undoes the method SwapHalf, which
+	 * set the last part of the list as the first part
+	 *****************************************************************/
+	public void UnSwapHalf() {
 		int length = lengthList();
+		
+		//gets the middle node
 		int half = (int)Math.ceil((double)length / 2);
 		Node temp = top;
 		Node delete;
 		Node swap;
-		for(int i = 0; i < half - 1; i++) {//goes to 2
+		for(int i = 0; i < half - 1; i++) {
 			temp = temp.getNext();
 		}
 
@@ -479,24 +523,5 @@ public class LinkedList {
 		}
 		temp.setNext(swap);
 		delete.setNext(null);
-	}
-
-
-	/******************************************************************
-	 * This method takes the last half of the mixed up list and sets it
-	 * as the first half so that it undoes the method HalfNHalf, which
-	 * set the last part of the list as the first part
-	 *****************************************************************/
-	public void undoSwapHalf() {
-		//FIXME: doesnt work
-		int length = lengthList();
-		Node temp = top;
-		for(int i = 0; i < Math.ceil(length/2); i++) {
-			for(int check = 0; check < length; check++) {
-				temp = temp.getNext();
-			}
-			temp.setNext(top);
-			top = temp;	
-		}
 	}
 }
