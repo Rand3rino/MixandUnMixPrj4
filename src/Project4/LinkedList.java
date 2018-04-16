@@ -337,7 +337,8 @@ public class LinkedList {
 				secondNode = firstNode.getNext();	
 
 				// Create the insertNode to point to the secondNode.
-				insertNode = new Node(s.substring(i, i + 1), secondNode);
+				insertNode = new Node(s.substring(i, i + 1), 
+						secondNode);
 
 				// Redirect the firstNode to point to the insertNode.
 				firstNode.setNext(insertNode);
@@ -458,7 +459,8 @@ public class LinkedList {
 		//increment each node that is not a space
 		for(int i = 0; i <= length-1; i++) {
 			if((int)temp1.getData().charAt(0) != 32) {
-				char letter = (char)((char) temp1.getData().charAt(0) + incrdecr);
+				char letter = (char)((char) temp1.getData().charAt(0)
+						+ incrdecr);
 				temp1.setData(Character.toString(letter));
 			}
 			if(i < length)
