@@ -33,11 +33,9 @@ public class NewNode {
 	 * Constructor for the NewNode class that instantiates all 
 	 * instance variables.
 	 * 
-	 * @param data String for the contents of the clipboards.
 	 * @param clipboardNumber Integer for the current clipboard number.
 	 * @param next A NewNode for the next clipboard in the clipboard 
-	 * 				Linked List.
-	 * @param list FIXME
+	 * 		Linked List.
 	 * @param top A Node for the current clipboard number Linked List.
 	 ******************************************************************/
 	public NewNode(int clipboardNumber, NewNode next, Node top) {
@@ -93,11 +91,9 @@ public class NewNode {
 	}
 	
 	/******************************************************************
-	 * Set method for the clipboard number in the clipboard Linked 
-	 * List.
+	 * Set method for the clipboard number.
 	 * 
-	 * @param clipboardNumber Integer that represents the current 
-	 * 							clipboard.
+	 * @param clipboardNumber Integer for the current clipboard.
 	 *****************************************************************/
 	public void setClipboardNumber(int clipboardNumber) {
 		this.clipboardNumber = clipboardNumber;
@@ -119,25 +115,5 @@ public class NewNode {
 	 *****************************************************************/
 	public void setNext(NewNode next) {
 		this.next = next;
-	}
-	
-	/******************************************************************
-	 * Get method for NewNode top which is the first node in New 
-	 * Linked List.
-	 * 
-	 * @return The top node in New Linked List
-	 *****************************************************************/
-	public NewNode getNewTop() {
-		return newTop;
-	}
-
-	/******************************************************************
-	 * Set method for the New Node top.
-	 * 
-	 * @param newTop A NewNode that is the first node in New Linked 
-	 * 					List.
-	 *****************************************************************/
-	public void setNewTop(NewNode newTop) {
-		this.newTop = newTop;
 	}
 }

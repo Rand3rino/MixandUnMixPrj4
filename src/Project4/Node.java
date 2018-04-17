@@ -19,10 +19,10 @@ public class Node {
 	private Node next;
 
 	/******************************************************************
-	*Constructor for the Node class that initializes data and next.
+	* Constructor for the Node class that initializes data and next.
 	*
-	*@param data Variable for the Nodes data.
-	*@param next Sets the next node in the linked list.
+	* @param data Variable for the Nodes data.
+	* @param next Sets the next node in the linked list.
 	******************************************************************/
 	public Node(String data, Node next) {
 		this.data = data;
@@ -30,36 +30,36 @@ public class Node {
 	}
 
 	/******************************************************************
-	*Get method that returns the data of the current node.
+	* Get method that returns the data of the current node.
 	*
-	*@return A string that is the data of the current node.
+	* @return A string that is the data of the current node.
 	******************************************************************/
 	public String getData() {
 		return data;
 	}
 	
 	/******************************************************************
-	*Set method to set the data for the current node.
+	* Set method to set the data for the current node.
 	*
-	*@param data String to set the data for the current node.
+	* @param data String to set the data for the current node.
 	******************************************************************/
 	public void setData(String data) {
 		this.data = data;
 	}
 	
 	/******************************************************************
-	*Set method to set the next node in the linked list.
+	* Set method to set the next node in the linked list.
 	*
-	*@param next Node to set the next node in the linked list.
+	* @param next Node to set the next node in the linked list.
 	******************************************************************/
 	public void setNext(Node next) {
 		this.next = next;
 	}
 	
 	/******************************************************************
-	*Get method the return the next node in the linked list.
+	* Get method the return the next node in the linked list.
 	*
-	*@return The next node in the linked list.
+	* @return The next node in the linked list.
 	******************************************************************/
 	public Node getNext() {
 		return next;
