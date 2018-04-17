@@ -1,5 +1,11 @@
 
-b ///Hee2fdsrlgluos oWn///1 
-b ///orl///20 
-r 4 7
+b ///Fen///1 
 f
+b ///aesrdgkufsjol///1 
+r 1 4
+b ///ell///1 
+a +
+a -
+f
+r 0 6
+b ///Hello World///0 

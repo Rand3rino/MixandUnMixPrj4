@@ -277,16 +277,12 @@ public class LinkedList {
 	 *****************************************************************/
 	public boolean insertAfter(int pos, String s) {
 
-		// Case 0: The list does not exist.
-		if (top == null)
-			return false;
-
 		// Case 1: The list is not long enough.
 		if (lengthList() < pos - 2)
 			return false;
 
 		// Case 2: Insert at position 0.
-		if (pos == 0) {
+		if (pos == 0 || top == null) {
 			Node temp = top;
 			Node temp1;
 

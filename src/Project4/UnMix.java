@@ -172,7 +172,6 @@ public class UnMix {
 			scnr.useDelimiter("///");
 			scnr.next();
 			String word = scnr.next();
-			System.out.println("_" + word + "_");
 			scnr.useDelimiter("\\s");
 			unMix.insertString(word, Integer.parseInt(scnr.next().substring(3)));
 			break;
