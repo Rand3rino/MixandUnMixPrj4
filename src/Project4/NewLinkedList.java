@@ -1,3 +1,13 @@
+/**********************************************************************
+ * Project 4: NewLinkedList
+ * 
+ * This class will execute commands for clipboards such as copy, cut,
+ * and paste. 
+ *
+ * @author Randy Nguyen, Sam Ventocilla, and Jay Brunsting.
+ * @version April 17th, 2018.
+ *********************************************************************/
+
 package Project4;
 
 public class NewLinkedList {
@@ -5,7 +15,7 @@ public class NewLinkedList {
 	/** The top node of the linked list. */
 	private Node top;
 
-	/** FIXME */
+	/** The current node in the new linked list */
 	private NewNode clipboard;
 
 	/******************************************************************
@@ -32,55 +42,8 @@ public class NewLinkedList {
 	 *****************************************************************/
 	public void addAtTop(String s) {
 		top = new Node(s, top);
-
 	}
-
-	/******************************************************************
-	 * This method will remove a node that is the first occurrence of 
-	 * the given string.
-	 * 
-	 * @param s The input string used for the search.
-	 * @return True if the removal is complete, false if not.
-	 *****************************************************************/
-	public boolean remove(String s) {
-		//String to hold the removed characters
-		String removed;
-
-		// Case 0: There is no list.
-		if(top == null)
-			return false;
-
-		// Case 1: There is 1 item and s is found.
-		if(top.getData().equals(s) && top.getNext() == null) {
-			top = null;
-			return true;
-		}
-
-		// Case 2: There is 1 item and s is not found.
-		if(!top.getData().equals(s) && top.getNext() == null)
-			return false;
-
-		// Case 3: There are multiple items and s is on top.
-		if(top.getData().equals(s) && top.getNext() != null) {
-			top = top.getNext();
-			return true;
-		}
-
-		// Case 4: There are multiple items and s is not on top.
-		Node temp = top;
-		while(temp.getNext() != null) {
-			if(temp.getNext().getData().equals(s)) {
-				temp.setNext(temp.getNext().getNext());
-				return true;
-			}
-			else
-				temp = temp.getNext();
-		}
-
-		// Default: A node could not be removed.
-		return false;
-	}
-
+	
 	/******************************************************************
 	 * This method will remove a section of the list. This will not
 	 * work if the list is outside the domain of the section.
@@ -90,9 +53,11 @@ public class NewLinkedList {
 	 * @return true if the removal is complete, false if not.
 	 *****************************************************************/
 	public String removeSection(int start, int end) {
+		
+		// Variable for the data that was removed.
 		String removed = "";
 
-		// Invalid input. End cannot be before start.
+		// Invalid input. End cannot be before the start.
 		if (start > end)
 			return removed;
 
@@ -135,21 +100,21 @@ public class NewLinkedList {
 			Node temp = top;
 
 			// Assign temp to the last position before the cut.
-			for (int step = 0; step < start - 1; step++) {
+			for (int step = 0; step < start - 1; step++)
 				temp = temp.getNext();
-			}
 
 			Node delete = temp;
 
-			//Get the value of the last positions
+			// Get the string data of the end positions.
 			for(int step = start; step <= end; step++) {
-				removed = removed + temp.getData();
+				removed += temp.getData();
 				temp = temp.getNext();
 			}
 
 			// Set the end of the list.
 			delete.setNext(null);
 
+			// Return the string that was cut out.
 			return removed;
 		}
 
@@ -161,9 +126,8 @@ public class NewLinkedList {
 			Node firstNode = top;
 
 			// Assign the firstNode to the node after the cut.
-			for (int step = 0; step < end+1; step++) {
+			for (int step = 0; step < end+1; step++)
 				firstNode = firstNode.getNext();
-			}
 
 			// Assign the top of the list to the end of the cut.
 			top = firstNode;
@@ -275,8 +239,8 @@ public class NewLinkedList {
 			return removed;
 		}
 
-		// Case 6: Copu a section starting at first node 
-		//and has an end.
+		// Case 6: Copy a section starting at first node 
+		// and has an end.
 		if (start == 0) {
 
 			// Assign the firstNode to the node after the copy.
@@ -300,7 +264,7 @@ public class NewLinkedList {
 
 			// Assign secondNode to the position after the copy.
 			for (int step = 0; step < end - start + 1; step++) {
-				removed = removed + temp.getData();
+				removed += temp.getData();
 				temp = temp.getNext();
 			}
 
@@ -358,12 +322,12 @@ public class NewLinkedList {
 			Node temp = top;
 
 			// Assign temp to the last position of the list.
-			for (int step = 0; step < pos - 1; step++) {
+			for (int step = 0; step < pos - 1; step++)
 				temp = temp.getNext();
-			}
 
 			//insert string at end of list
 			for(int i = 0; i < s.length(); i++) {
+				
 				// Add to the end of the list.
 				temp.setNext(new Node(s.substring(i, i + 1), null));
 				temp = temp.getNext();
@@ -385,9 +349,8 @@ public class NewLinkedList {
 			Node insertNode;
 
 			// Assign firstNode to the position before the insert.
-			for (int step = 0; step < pos - 1; step++) {
+			for (int step = 0; step < pos - 1; step++)
 				firstNode = firstNode.getNext();
-			}
 
 			//secondNode = firstNode.getNext();
 			// Assign secondNode to the end position of insert.
@@ -435,6 +398,7 @@ public class NewLinkedList {
 	 *@param clipboard Clipboard to be pasted into linked list.
 	 ******************************************************************/
 	public String paste(int index, int clipboardNum) {
+		
 		//take message from the given clipboard and using insertAfter method
 		//paste the message into Linked List
 		String removed = "";
@@ -485,6 +449,7 @@ public class NewLinkedList {
 	 *@param clipboard Clipboard to paste message into.
 	 ******************************************************************/
 	public void copy(int startIndex, int endIndex, int clipboardNum) {
+		
 		String temp = copySection(startIndex, endIndex);
 		Node temp1 = top;		
 		NewNode end = clipboard.getNewTop();
@@ -525,7 +490,6 @@ public class NewLinkedList {
 	 ******************************************************************/
 	public String cut(int startIndex, int endIndex, int clipboardNum) {
 		copy(startIndex, endIndex, clipboardNum);
-		
 		return removeSection(startIndex, endIndex);	
 	}
 }
