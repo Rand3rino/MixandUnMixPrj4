@@ -205,7 +205,7 @@ public class Mix {
 	 *****************************************************************/
 	public void helpPage() {
 		System.out.println("\n-------Help Page-------");
-		System.out.println("Q: Quits program and saves undo "
+		System.out.println("Q filename: Quits program and saves undo "
 				+ "commands.");
 		System.out.println("b s #: Inserts a string(s) at "
 				+ "location(#).");
@@ -214,11 +214,10 @@ public class Mix {
 		System.out.println("H: Displays help page.");
 		System.out.println("a *: Increments or Decrements(*) the ascii"
 				+ " value of each element in the Linked List.");
-		System.out.println("f: Inserts ferguson between alternating "
-				+ "characters.");
+		System.out.println("f: Surprise!");
 		System.out.println("s: Swaps the message around.");
-		System.out.println("p # &: Pastes from clipboard(&) at "
-				+ "location(#)");
+		System.out.println("p # &: Pastes at location(#) from "
+				+ "clipboard(&)");
 		System.out.println("c # % &: Copies from index(#) to index(%) "
 				+ "into clipboard(&).");
 		System.out.println("x # % &: Cuts from index(#) to index(%) "
@@ -230,7 +229,7 @@ public class Mix {
 	 *UnMix program.
 	 *
 	 *@param str String to hold the encryption commands.
-	 ******************************************************************/
+	 *****************************************************************/
 	private void saveCommands(String str) {
 		commands = "\n"+ str + commands;
 	}
@@ -239,7 +238,7 @@ public class Mix {
 	 *Method that creates the file to hold encryption commands.
 	 *
 	 *@param instruction Encryption commands to be stored.
-	 ******************************************************************/
+	 *****************************************************************/
 	private void createFile(String filename, String instruction)
 			throws IOException  {
 		File file = new File(filename);
@@ -250,11 +249,11 @@ public class Mix {
 	}
 
 	/******************************************************************
-	 *Method to increment the ascii value of the character sent.
+	 * Method to increment the ascii value of the character sent.
 	 *
-	 *@param ascii Character to be incremented
-	 *@return boolean Returns true if action performed else false.
-	 ******************************************************************/
+	 * @param ascii Character to be incremented
+	 * @return boolean Returns true if action performed else false.
+	 *****************************************************************/
 	private boolean changeAscii(char ascii) {
 		if(ascii == '+')
 			saveCommands("a -");
@@ -263,19 +262,42 @@ public class Mix {
 		return message.changeAscii(ascii);
 	}
 	
+	/******************************************************************
+	 * Method to paste a series of nodes into the list.
+	 *
+	 * @param index The starting location of the paste.
+	 * @param clipboardNum Where the series is from.
+	 *****************************************************************/
 	private void paste(int index, int clipboardNum) {
+		
+		// Pasted String
 		String temp = newMessage.paste(index, clipboardNum);
 		
+		// If there is not string, then command incomplete.
 		if(temp.length() == 0)
 			System.out.println("Command could not be carried out.");
 		else
 			saveCommands("r " + index + " " + (index + temp.length()));
 	}
 	
+	/******************************************************************
+	 * Method to copy a series of nodes from the list.
+	 *
+	 * @param startIndex The starting location of the copy.
+	 * @param endIndex The end location of the copy.
+	 * @param clipboardNum Where the series is from.
+	 *****************************************************************/
 	private void copy(int startIndex, int endIndex, int clipboardNum) {
 		newMessage.copy(startIndex, endIndex, clipboardNum);
 	}
 	
+	/******************************************************************
+	 * Method to cut a series of nodes from the list.
+	 *
+	 * @param startIndex The starting location of the copy.
+	 * @param endIndex The end location of the copy.
+	 * @param clipboardNum Where the series is from.
+	 *****************************************************************/
 	private void cut(int startIndex, int endIndex, int clipboardNum) {
 		String temp = "";
 		temp = newMessage.cut(startIndex, endIndex, clipboardNum);
