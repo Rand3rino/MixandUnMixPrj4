@@ -61,7 +61,7 @@ public class Mix {
 	 *****************************************************************/
 	private static void inputCommands() {
 		Scanner scnr = new Scanner(System.in).useDelimiter("\\s");
-		String command, words;
+		String command, words, filename = "";
 		int toNum, toNum2;
 		Mix mix = new Mix();
 		do {
@@ -70,7 +70,8 @@ public class Mix {
 			//quit and save to file
 			case "Q":
 				try {
-					mix.createFile(scnr.next(), mix.commands);
+					filename = scnr.next();
+					mix.createFile(filename, mix.commands);
 				} catch (IOException e) {
 					System.out.println("File could not be created");
 				}
@@ -160,6 +161,9 @@ public class Mix {
 			scnr.nextLine();
 			message.display();
 		}while(!command.equals("Q"));
+		
+		System.out.print("Copy this into UnMix: " + filename + " '"
+				+ message.displayNormal() + "' ");
 	}
 
 	/******************************************************************
