@@ -17,6 +17,9 @@ public class NewLinkedList {
 
 	/** The current node in the new linked list */
 	private NewNode clipboard;
+	
+	/** The top node of the new linked list. */
+	private NewNode newTop;
 
 	/******************************************************************
 	 * Constructor for LinkedList that sets top to null.
@@ -24,6 +27,7 @@ public class NewLinkedList {
 	public NewLinkedList() {
 		top = null;
 		clipboard = null;
+		newTop = null;
 	}
 
 	/******************************************************************
@@ -402,7 +406,7 @@ public class NewLinkedList {
 		//take message from the given clipboard and using insertAfter method
 		//paste the message into Linked List
 		String removed = "";
-		NewNode temp = clipboard.getNewTop();
+		NewNode temp = newTop;
 		Node temp1;
 
 		//Case 0: No clip board.
@@ -435,7 +439,7 @@ public class NewLinkedList {
 				if(!insertAfter(index, removed))
 					return "";
 			}
-			temp = temp.getNewTop();
+			temp = newTop;
 		}
 
 		return removed;
@@ -452,7 +456,7 @@ public class NewLinkedList {
 		
 		String temp = copySection(startIndex, endIndex);
 		Node temp1 = top;		
-		NewNode end = clipboard.getNewTop();
+		NewNode end = newTop;
 
 		//if the New Linked List is empty
 		if(end == null)
