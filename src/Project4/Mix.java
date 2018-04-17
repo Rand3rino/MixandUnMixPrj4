@@ -69,10 +69,8 @@ public class Mix {
 			switch(command) {
 			//quit and save to file
 			case "Q":
-				System.out.println("Creating a file named 'KEY'.");
 				try {
-					System.out.println(mix.commands);
-					mix.createFile(mix.commands);
+					mix.createFile(scnr.next(), mix.commands);
 				} catch (IOException e) {
 					System.out.println("File could not be created");
 				}
@@ -237,9 +235,11 @@ public class Mix {
 	 *
 	 *@param instruction Encryption commands to be stored.
 	 ******************************************************************/
-	private void createFile(String instruction) throws IOException  {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(
-				"Key"));
+	private void createFile(String filename, String instruction)
+			throws IOException  {
+		File file = new File(filename);
+		BufferedWriter writer = new BufferedWriter(new FileWriter
+			(file));
 		writer.write(instruction);
 		writer.close();
 	}
