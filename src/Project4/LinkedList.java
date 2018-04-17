@@ -202,7 +202,7 @@ public class LinkedList {
 
 			//Get the value of the last positions
 			for(int step = start; step <= end; step++) {
-				removed = removed + temp.getData();
+				removed = removed + temp.getNext().getData();
 				temp = temp.getNext();
 			}
 
@@ -419,7 +419,7 @@ public class LinkedList {
 	public void removeFerguson() {
 		for(int i = 0; i <= lengthList() ; i++) {
 			//alternate letters
-			if(i > 14)
+			if(i > 7)
 				return;
 			if(i == 0) {
 				removeSection(0, 0);
@@ -536,5 +536,13 @@ public class LinkedList {
 		}
 		temp.setNext(swap);
 		delete.setNext(null);
+	}
+	
+	public void displayMessage() {
+		Node temp = top;
+		for (int i = 0; i < lengthList(); i++){
+			System.out.println(temp.getData().charAt(0));
+			temp = temp.getNext();
+		}
 	}
 }
