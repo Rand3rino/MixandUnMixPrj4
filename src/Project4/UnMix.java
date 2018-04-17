@@ -42,7 +42,7 @@ public class UnMix {
 	 * 	includes the filename and the encrypted message in the format:
 	 *  filename 'encrypted message'.
 	 *****************************************************************/
-	public static void main(String [] args) { // FIXME throws IOException?  {
+	public static void main(String [] args) { 
 
 		// The filename is the first string of args.
 		UnMix.fileName += args[0];
@@ -144,7 +144,7 @@ public class UnMix {
 					reader.close();
 			} 
 			catch (IOException e) {
-				// FIXME Something happens here?
+				System.out.println("File not read.");
 			}
 		}
 
@@ -186,7 +186,7 @@ public class UnMix {
 		// Decrement ascii values.
 		case "a":
 			String s = scnr.next();
-			unMix.decrementAscii(s.charAt(0));
+			unMix.undoAscii(s.charAt(0));
 			break;
 			
 		// Remove the name Ferguson characters at every other node.
@@ -197,21 +197,6 @@ public class UnMix {
 		// Swap the first half of the list with the second.
 		case "s":
 			message.UnSwapHalf();
-			break;
-		
-		// Paste from clipboard.
-		case "p":
-			unMix.paste(scnr.nextInt(), scnr.nextInt());
-			break;
-			
-		// Copy to clipboard.
-		case "c":
-			unMix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
-			break;
-			
-		// Cut to clipboard.
-		case "x":
-			unMix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 			break;
 		}
 
@@ -250,30 +235,11 @@ public class UnMix {
 	}
 
 	/******************************************************************
-	 * FIXME
+	 * Increments or decrements character to undo previous command.
+	 * 
+	 * @param ascii Character to increment or decrement.
 	 *****************************************************************/
-	private void decrementAscii(char ascii) {
+	private void undoAscii(char ascii) {
 		message.changeAscii(ascii);
-	}
-	
-	/******************************************************************
-	 * FIXME
-	 *****************************************************************/
-	private void paste(int index, int clipboard) {
-		
-	}
-	
-	/******************************************************************
-	 * FIXME
-	 *****************************************************************/
-	private void copy(int startIndex, int endIndex, int clipboard) {
-		
-	}
-	
-	/******************************************************************
-	 * FIXME
-	 *****************************************************************/
-	private void cut(int startIndex, int endIndex, int clipboard) {
-		
 	}
 }
