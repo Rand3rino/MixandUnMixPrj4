@@ -141,12 +141,15 @@ public class Mix {
 				break;
 				//paste from clipboard
 			case "p":
+				mix.paste(scnr.nextInt(), scnr.nextInt());
 				break;
 				//copy to clipboard
 			case "c":
+				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
 				//cut to clipboard
 			case "x":
+				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
 				break;
 			default:
 				System.out.println("Please enter a valid command. "
@@ -172,7 +175,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("r " + pos + " " + (pos + s.length() - 1));
+		saveCommands("¯\\_(*_*)_/¯ r " + pos + " " + (pos + s.length() - 1 + " ¯\\_(*_*)_/¯"));
 	}
 
 	/******************************************************************
@@ -251,5 +254,28 @@ public class Mix {
 		else
 			saveCommands("a +");
 		return message.changeAscii(ascii);
+	}
+	
+	private void paste(int index, int clipboardNum) {
+		String temp = newMessage.paste(index, clipboardNum);
+		
+		if(temp.length() == 0)
+			System.out.println("Command could not be carried out.");
+		else
+			saveCommands("p " + index + " " + temp);
+	}
+	
+	private void copy(int startIndex, int endIndex, int clipboardNum) {
+		newMessage.copy(startIndex, endIndex, clipboardNum);
+	}
+	
+	private void cut(int startIndex, int endIndex, int clipboardNum) {
+		String temp = "";
+		temp = newMessage.cut(startIndex, endIndex, clipboardNum);
+		
+		if(temp.length() == 0)
+			System.out.println("Command could not be carried out.");
+		else
+			saveCommands("c " + startIndex + " " + endIndex);
 	}
 }
