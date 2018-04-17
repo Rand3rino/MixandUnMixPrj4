@@ -31,7 +31,6 @@ public class NewLinkedList {
 		newTop = null;
 	}
 
-	
 	/******************************************************************
 	 * Get method that returns the top node.
 	 * 
@@ -348,7 +347,7 @@ public class NewLinkedList {
 			// This node will be used to move through the list.
 			Node firstNode = top;
 
-			// This node will be the top of the second part of the list.
+			// This node will be the top of the 2nd part of the list.
 			Node secondNode;
 
 			// This node will be inserted into the list.
@@ -405,8 +404,8 @@ public class NewLinkedList {
 	 ******************************************************************/
 	public String paste(int index, int clipboardNum) {
 		
-		//take message from the given clipboard and using insertAfter method
-		//paste the message into Linked List
+		// Take message from the given clipboard and using insertAfter 
+		// method paste the message into Linked List
 		String removed = "";
 		NewNode temp = newTop;
 		Node temp1;
@@ -457,7 +456,7 @@ public class NewLinkedList {
 	 *@param startIndex Index in linked list to begin copying from.
 	 *@param endIndex Index in linked list to end copying from.
 	 *@param clipboard Clipboard to paste message into.
-	 ******************************************************************/
+	 *****************************************************************/
 	public void copy(int startIndex, int endIndex, int clipboardNum) {
 		
 		String temp = copySection(startIndex, endIndex);

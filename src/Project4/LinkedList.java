@@ -94,6 +94,7 @@ public class LinkedList {
 	 * @return True if the removal is complete, false if not.
 	 *****************************************************************/
 	public boolean remove(String s) {
+		
 		//String to hold the removed characters
 		String removed;
 
@@ -331,7 +332,7 @@ public class LinkedList {
 			// This node will be used to move through the list.
 			Node firstNode = top;
 
-			// This node will be the top of the second part of the list.
+			// This node will be the top of the 2nd part of the list.
 			Node secondNode;
 
 			// This node will be inserted into the list.
@@ -437,7 +438,7 @@ public class LinkedList {
 	 * @param check Character value to be incremented
 	 * @return A boolean that is true if ascii value is incremented and
 	 * 			false if it was unable to increment.
-	 ******************************************************************/
+	 *****************************************************************/
 	public boolean changeAscii(char check) {
 		int length = lengthList();
 		Node temp = top;
@@ -515,6 +516,7 @@ public class LinkedList {
 	 * set the last part of the list as the first part
 	 *****************************************************************/
 	public void UnSwapHalf() {
+		
 		int length = lengthList();
 		
 		//gets the middle node
@@ -538,6 +540,10 @@ public class LinkedList {
 		delete.setNext(null);
 	}
 	
+	/******************************************************************
+	 * Method to print out the linked list in a condensed version to 
+	 * display when a program closes.
+	 *****************************************************************/
 	public void displayMessage() {
 		Node temp = top;
 		for (int i = 0; i < lengthList(); i++){
