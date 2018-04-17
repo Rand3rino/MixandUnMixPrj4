@@ -22,9 +22,6 @@ public class NewNode {
 	
 	/** A NewNode for the next element in the Linked List. */
 	private NewNode next;
-	
-	/** First node in New Linked List. */
-	private NewNode newTop;
 
 	/** Reference for the top of each clipboard. */
 	private Node top;
