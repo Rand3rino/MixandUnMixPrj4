@@ -21,7 +21,7 @@ public class Mix {
 	private static LinkedList message = new LinkedList();
 	
 	/**Variable for the new linked list. */
-	private static NewLinkedList newMessage = new NewLinkedList();
+	private static NewLinkedList newMessage;
 
 	/** String to hold the users message from the command prompt. */
 	private static String userMessage;
@@ -50,6 +50,7 @@ public class Mix {
 		for (int i = 0; i < userMessage.length() - 1; i++)
 			message.append(userMessage.substring(i, i+1));
 
+		newMessage = new NewLinkedList(message.getTop());
 		message.display();
 		inputCommands();
 	}
@@ -175,7 +176,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("¯\\_(*_*)_/¯ r " + pos + " " + (pos + s.length() - 1 + " ¯\\_(*_*)_/¯"));
+		saveCommands("ï¿½\\_(*_*)_/ï¿½ r " + pos + " " + (pos + s.length() - 1 + " ï¿½\\_(*_*)_/ï¿½"));
 	}
 
 	/******************************************************************

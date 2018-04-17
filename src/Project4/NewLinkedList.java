@@ -12,7 +12,7 @@ package Project4;
 
 public class NewLinkedList {
 
-	/** The top node of the linked list. */
+	/** The top node of a clipboard */
 	private Node top;
 
 	/** The current node in the new linked list */
@@ -23,13 +23,15 @@ public class NewLinkedList {
 
 	/******************************************************************
 	 * Constructor for LinkedList that sets top to null.
+	 * @param top Top of the message linked list.
 	 *****************************************************************/
-	public NewLinkedList() {
-		top = null;
+	public NewLinkedList(Node top) {
+		this.top = top;
 		clipboard = null;
 		newTop = null;
 	}
 
+	
 	/******************************************************************
 	 * Get method that returns the top node.
 	 * 
@@ -263,7 +265,7 @@ public class NewLinkedList {
 			temp = top;
 
 			// Assign temp to the beginning of the section to be copied
-			for (int step = 0; step < start - 1; step++)
+			for (int step = 0; step < start; step++)
 				temp = temp.getNext();
 
 			// Assign secondNode to the position after the copy.
@@ -419,27 +421,31 @@ public class NewLinkedList {
 			temp1 = temp.getTop();
 
 			//loop through rest of linked list and get data
-			while(temp1.getNext().getData() != null)
-				removed += temp1.getNext().getData();
+			while(temp1.getNext() != null) {
+				temp1 = temp1.getNext();
+				removed += temp1.getData();
+			}
 
 			if(!insertAfter(index, removed))
 				return "";
 		}
-
+		temp = temp.getNext();
 		//Case 2: ClipboardNum is not the first node.
-		while(temp.getNext() != null) {
+		while(temp != null) {
 			if(temp.getClipboardNumber() == clipboardNum) {
 				removed += temp.getTop().getData();
 				temp1 = temp.getTop();
 
 				//loop through rest of linked list and get data
-				while(temp1.getNext().getData() != null)
-					removed += temp1.getNext().getData();
+				while(temp1.getNext() != null) {
+					temp1 = temp1.getNext();
+					removed += temp1.getData();
+				}
 
 				if(!insertAfter(index, removed))
 					return "";
 			}
-			temp = newTop;
+			temp = temp.getNext();
 		}
 
 		return removed;
@@ -455,16 +461,17 @@ public class NewLinkedList {
 	public void copy(int startIndex, int endIndex, int clipboardNum) {
 		
 		String temp = copySection(startIndex, endIndex);
-		Node temp1 = top;		
+		Node temp1;		
 		NewNode end = newTop;
 
+		temp1 = new Node(temp.substring(0,1), null);
 		//if the New Linked List is empty
-		if(end == null)
-			end = new NewNode(clipboardNum, null, top);
+		if(newTop == null)
+			newTop = new NewNode(clipboardNum, null, temp1);
 		
 		//if the New Linked List is one element long
 		else if(end.getNext() == null)
-			end.setNext(new NewNode(clipboardNum, null, top));
+			end.setNext(new NewNode(clipboardNum, null, temp1));
 		
 		//if the New Linked List is more than one element
 		else {
@@ -472,13 +479,13 @@ public class NewLinkedList {
 			//loop to end of NewLinkedList
 			while(end.getNext() != null) 
 				end = end.getNext();
-			end.setNext(new NewNode(clipboardNum, null, top));
+			end.setNext(new NewNode(clipboardNum, null,temp1));
 		}
-
+		
 		//add copied message to New Linked List
-		top.setData(temp.substring(0, 1));
-		temp1 = top;
-		for(int i = 0; i < temp.length(); i++) {
+		//top.setData(temp.substring(0, 1));
+		//temp1 = new Node(temp.substring(0,1), null);
+		for(int i = 1; i < temp.length(); i++) {
 			temp1.setNext(new Node(temp.substring(i, i+1), null));
 			temp1 = temp1.getNext();
 		}
