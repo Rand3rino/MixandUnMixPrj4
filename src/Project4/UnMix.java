@@ -12,6 +12,7 @@
 package Project4;
 import java.io.*;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class UnMix {
 
@@ -168,10 +169,12 @@ public class UnMix {
 
 		// Insert a section.
 		case "b":
-			scnr.useDelimiter("\\s*¯\\_(*_*)_/¯\\s*");
+			scnr.useDelimiter("///");
+			scnr.next();
 			String word = scnr.next();
-			scnr.useDelimiter(" ");
-			unMix.insertString(word, scnr.nextInt());
+			System.out.println("_" + word + "_");
+			scnr.useDelimiter("\\s");
+			unMix.insertString(word, Integer.parseInt(scnr.next().substring(3)));
 			break;
 
 		// Remove a section.
@@ -227,8 +230,6 @@ public class UnMix {
 	 * @param pos The starting node location.
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
-		int sLength = s.length();
-		s = s.substring(0, sLength-2);
 		// Insert not complete. Print an error message.
 		if (!message.insertAfter(pos, s))
 			System.out.println("Command Incomplete.");
