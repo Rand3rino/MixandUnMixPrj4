@@ -1,0 +1,520 @@
+package Project4;
+
+public class NewLinkedList {
+
+	/** The top node of the linked list. */
+	private Node top;
+	
+	/** FIXME */
+	private NewNode clipboard;
+
+	/******************************************************************
+	 * Constructor for LinkedList that sets top to null.
+	 *****************************************************************/
+	public NewLinkedList() {
+		top = null;
+		clipboard = null;
+	}
+
+	/******************************************************************
+	 * Get method that returns the top node.
+	 * 
+	 * @return The top node of the linked list.
+	 *****************************************************************/
+	public Node getTop() {
+		return top;
+	}
+
+	/******************************************************************
+	 * Method to add to the top of the linked list.
+	 * 
+	 * @param s Data to set the top as.
+	 *****************************************************************/
+	public void addAtTop(String s) {
+		top = new Node(s, top);
+
+	}
+
+	/******************************************************************
+	 * Method to print out the linked list in a formatted version with
+	 * the number of the position above each node.
+	 *****************************************************************/
+	public void display() {
+		Node temp = top;
+
+		System.out.print ("Message:\n");
+		for (int i = 0; i < lengthList(); i++) { 
+			System.out.format ("%3d", i);
+
+		}
+		System.out.format ("\n");
+		for (int i = 0; i < lengthList(); i++)  {
+			System.out.format("%3c", temp.getData().charAt(0));
+			temp = temp.getNext();
+		}
+		System.out.format ("\n");
+	}
+
+	/******************************************************************
+	 * Method to add a string to the end of the linked list.
+	 * 
+	 * @param s Data of type string to be added to end of the linked 
+	 * 			list.
+	 *****************************************************************/
+	public void append(String s) {
+
+		// Case 0: The list does not exist.
+		if (top == null) {
+			addAtTop(s);
+			return;
+		}
+
+		// Case 1: at Least one item in list
+		else {
+			Node temp = top;
+			while (temp.getNext() != null) {
+				temp = temp.getNext();
+			}
+			temp.setNext(new Node(s, null));
+		}
+
+	}
+
+	/******************************************************************
+	 * This method will remove a node that is the first occurrence of 
+	 * the given string.
+	 * 
+	 * @param s The input string used for the search.
+	 * @return True if the removal is complete, false if not.
+	 *****************************************************************/
+	public boolean remove(String s) {
+		//String to hold the removed characters
+		String removed;
+
+		// Case 0: There is no list.
+		if(top == null)
+			return false;
+
+		// Case 1: There is 1 item and s is found.
+		if(top.getData().equals(s) && top.getNext() == null) {
+			top = null;
+			return true;
+		}
+
+		// Case 2: There is 1 item and s is not found.
+		if(!top.getData().equals(s) && top.getNext() == null)
+			return false;
+
+		// Case 3: There are multiple items and s is on top.
+		if(top.getData().equals(s) && top.getNext() != null) {
+			top = top.getNext();
+			return true;
+		}
+
+		// Case 4: There are multiple items and s is not on top.
+		Node temp = top;
+		while(temp.getNext() != null) {
+			if(temp.getNext().getData().equals(s)) {
+				temp.setNext(temp.getNext().getNext());
+				return true;
+			}
+			else
+				temp = temp.getNext();
+		}
+
+		// Default: A node could not be removed.
+		return false;
+	}
+
+	/******************************************************************
+	 * This method will remove a section of the list. This will not
+	 * work if the list is outside the domain of the section.
+	 * 
+	 * @param start The beginning location of the cut.
+	 * @param end The final location of the cut.
+	 * @return true if the removal is complete, false if not.
+	 *****************************************************************/
+	public String removeSection(int start, int end) {
+		String removed = "";
+
+		// Invalid input. End cannot be before start.
+		if (start > end)
+			return removed;
+
+		// Invalid input. Section cannot be negative.
+		if (start < 0 || end < 0) 
+			return removed;
+
+		// Case 0: The list does not exist.
+		if (top == null)
+			return removed;
+
+		// Case 1: The list is not long enough.
+		if (lengthList() <= start)
+			return removed;
+
+		// Case 2: The list is only one and the insert is at zero.
+		if (lengthList() == 1 && start == 0) {
+			removed = top.getData();
+			top = null;
+			return removed;
+		}
+
+		// Case 3: User enters 0 0. Cut the top node.
+		if (start == 0 && end == 0) {
+			removed = top.getData();
+			top = top.getNext();
+			return removed;
+		}
+
+		//Case 4: Remove a section starting at 0 and having no end
+		if (start == 0 && lengthList() - 1 <= end) {
+			top = null;
+			return removed;
+		}			
+
+		// Case 5: The list can be cut but there is no end section.
+		if(lengthList() > start && lengthList() - 1 <= end) {
+
+			// This node will be used to move through the list.
+			Node temp = top;
+
+			// Assign temp to the last position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				temp = temp.getNext();
+			}
+
+			Node delete = temp;
+
+			//Get the value of the last positions
+			for(int step = start; step <= end; step++) {
+				removed = removed + temp.getData();
+				temp = temp.getNext();
+			}
+
+			// Set the end of the list.
+			delete.setNext(null);
+
+			return removed;
+		}
+
+		// Case 6: Remove a section starting at first node 
+		//and has an end.
+		if (start == 0) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// Assign the firstNode to the node after the cut.
+			for (int step = 0; step < end+1; step++) {
+				firstNode = firstNode.getNext();
+			}
+
+			// Assign the top of the list to the end of the cut.
+			top = firstNode;
+		}
+
+		// Case 7: The list can be cut and there is an end section.
+		if (lengthList() > start && lengthList() - 1 > end) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// This node is the top of the second part of the list.
+			Node secondNode;
+
+			// Assign firstNode to the position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				removed = removed + firstNode.getData();
+				firstNode = firstNode.getNext();
+			}
+
+			// Start secondNode after firstNode.
+			secondNode = firstNode.getNext();
+
+			// Assign secondNode to the position after the cut.
+			for (int step = 0; step < end - start + 1; step++) {
+				removed = removed + secondNode.getData();
+				secondNode = secondNode.getNext();
+			}
+
+			// Direct the firstNode to the Second Node, 
+			// removing all in between.
+			firstNode.setNext(secondNode);
+			return removed;
+		}
+
+		// Default: A section could not be removed.
+		return removed;
+	}
+	
+	//FIXME: Modify to copy section not remove section
+	public String copySection(int start, int end) {
+		String removed = "";
+
+		// Invalid input. End cannot be before start.
+		if (start > end)
+			return removed;
+
+		// Invalid input. Section cannot be negative.
+		if (start < 0 || end < 0) 
+			return removed;
+
+		// Case 0: The list does not exist.
+		if (top == null)
+			return removed;
+
+		// Case 1: The list is not long enough.
+		if (lengthList() <= start)
+			return removed;
+
+		// Case 2: The list is only one and the insert is at zero.
+		if (lengthList() == 1 && start == 0) {
+			removed = top.getData();
+			top = null;
+			return removed;
+		}
+
+		// Case 3: User enters 0 0. Cut the top node.
+		if (start == 0 && end == 0) {
+			removed = top.getData();
+			top = top.getNext();
+			return removed;
+		}
+
+		//Case 4: Remove a section starting at 0 and having no end
+		if (start == 0 && lengthList() - 1 <= end) {
+			top = null;
+			return removed;
+		}			
+
+		// Case 5: The list can be cut but there is no end section.
+		if(lengthList() > start && lengthList() - 1 <= end) {
+
+			// This node will be used to move through the list.
+			Node temp = top;
+
+			// Assign temp to the last position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				temp = temp.getNext();
+			}
+
+			Node delete = temp;
+
+			//Get the value of the last positions
+			for(int step = start; step <= end; step++) {
+				removed = removed + temp.getData();
+				temp = temp.getNext();
+			}
+
+			// Set the end of the list.
+			delete.setNext(null);
+
+			return removed;
+		}
+
+		// Case 6: Remove a section starting at first node 
+		//and has an end.
+		if (start == 0) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// Assign the firstNode to the node after the cut.
+			for (int step = 0; step < end+1; step++) {
+				firstNode = firstNode.getNext();
+			}
+
+			// Assign the top of the list to the end of the cut.
+			top = firstNode;
+		}
+
+		// Case 7: The list can be cut and there is an end section.
+		if (lengthList() > start && lengthList() - 1 > end) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// This node is the top of the second part of the list.
+			Node secondNode;
+
+			// Assign firstNode to the position before the cut.
+			for (int step = 0; step < start - 1; step++) {
+				removed = removed + firstNode.getData();
+				firstNode = firstNode.getNext();
+			}
+
+			// Start secondNode after firstNode.
+			secondNode = firstNode.getNext();
+
+			// Assign secondNode to the position after the cut.
+			for (int step = 0; step < end - start + 1; step++) {
+				removed = removed + secondNode.getData();
+				secondNode = secondNode.getNext();
+			}
+
+			// Direct the firstNode to the Second Node, 
+			// removing all in between.
+			firstNode.setNext(secondNode);
+			return removed;
+		}
+
+		// Default: A section could not be removed.
+		return removed;
+	}
+
+
+	/******************************************************************
+	 * This method is used to insert a node into the list. If the node
+	 * that is to be inserted is not within the reaches of the list,
+	 * it will not be added. If the node can be added, it will shift 
+	 * all nodes after it by the length of s.
+	 * 
+	 * @param pos The position where the node will be inserted.
+	 * @param s The string data for the inserted node.
+	 * @return True if the insert can be complete, false if not.
+	 *****************************************************************/
+	public boolean insertAfter(int pos, String s) {
+
+		// Case 0: The list does not exist.
+		if (top == null)
+			return false;
+
+		// Case 1: The list is not long enough.
+		if (lengthList() < pos - 2)
+			return false;
+
+		// Case 2: Insert at position 0.
+		if (pos == 0) {
+			Node temp = top;
+			Node temp1;
+
+			//add first node
+			addAtTop(s.substring(0, 1));
+			temp1 = top;
+
+			// add s to end of list
+			for(int i = 1; i < s.length(); i++) {
+				temp1.setNext(new Node(s.substring(i, i+1), null));
+				temp1 = temp1.getNext();
+			}
+
+			temp1.setNext(temp);
+			return true;
+		}
+
+		// Case 3: The list is one short of the position.
+		if (lengthList() == pos) {
+
+			// This node will be used to move through the list.
+			Node temp = top;
+
+			// Assign temp to the last position of the list.
+			for (int step = 0; step < pos - 1; step++) {
+				temp = temp.getNext();
+			}
+
+			//insert string at end of list
+			for(int i = 0; i < s.length(); i++) {
+				// Add to the end of the list.
+				temp.setNext(new Node(s.substring(i, i + 1), null));
+				temp = temp.getNext();
+			}
+
+			return true;
+		}
+
+		// Case 4: The length matches or is greater than the position.
+		if (lengthList() > pos) {
+
+			// This node will be used to move through the list.
+			Node firstNode = top;
+
+			// This node will be the top of the second part of the list.
+			Node secondNode;
+
+			// This node will be inserted into the list.
+			Node insertNode;
+
+			// Assign firstNode to the position before the insert.
+			for (int step = 0; step < pos - 1; step++) {
+				firstNode = firstNode.getNext();
+			}
+
+			//secondNode = firstNode.getNext();
+			// Assign secondNode to the end position of insert.
+			for(int i = 0; i < s.length(); i++) {
+				secondNode = firstNode.getNext();	
+
+				// Create the insertNode to point to the secondNode.
+				insertNode = new Node(s.substring(i, i + 1), 
+						secondNode);
+
+				// Redirect the firstNode to point to the insertNode.
+				firstNode.setNext(insertNode);
+				firstNode = firstNode.getNext();
+			}
+
+			return true;
+		}
+
+		// Default: Unable to insert node.
+		return false;
+	}
+
+	/******************************************************************
+	 * This method is used to determine the length of the list.
+	 * 
+	 * @return length The number of nodes in this Linked List.
+	 *****************************************************************/
+	public int lengthList() {
+
+		int length = 0;
+		Node temp = top;
+		while (temp != null) {
+			length++;
+			temp = temp.getNext();
+		}
+
+		return length;
+	}
+	
+
+	/******************************************************************
+	 *Method to paste given clipboard into linked list at given index.
+	 *
+	 *@param index Location to paste clipboard into.
+	 *@param clipboard Clipboard to be pasted into linked list.
+	 ******************************************************************/
+	private void paste(int index, int clipboard) {
+		//take message from the given clipboard and using insertAfter method
+		//paste the message into Linked List
+	}
+
+	/******************************************************************
+	 *Method to copy from linked list into a clipboard.
+	 *
+	 *@param startIndex Index in linked list to begin copying from.
+	 *@param endIndex Index in linked list to end copying from.
+	 *@param clipboard Clipboard to paste message into.
+	 ******************************************************************/
+	private void copy(int startIndex, int endIndex, int clipboard) {
+		//copy this section into clipboard
+		String temp = removeSection(startIndex, endIndex);
+
+	}
+
+	/******************************************************************
+	 *Method to cut section from linked list and paste it into the 
+	 *clipboard.
+	 *
+	 *@param startIndex Index to begin cutting from in linked list.
+	 *@param endIndex Index to end cutting from in linked list.
+	 *@param clipboard Clipboard to paste cut section in.
+	 ******************************************************************/
+	private void cut(int startIndex, int endIndex, int clipboard) {
+		//FIXME: Needs to return section cut so that it can be pasted into the clipboard
+		removeSection(startIndex, endIndex);
+		//paste section cut into NewLinkedList
+	}
+}
