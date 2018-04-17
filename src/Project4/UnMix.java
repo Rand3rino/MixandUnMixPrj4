@@ -168,7 +168,10 @@ public class UnMix {
 
 		// Insert a section.
 		case "b":
-			unMix.insertString(scnr.next(), scnr.nextInt());
+			scnr.useDelimiter("\\s*¯\\_(*_*)_/¯\\s*");
+			String word = scnr.next();
+			scnr.useDelimiter(" ");
+			unMix.insertString(word, scnr.nextInt());
 			break;
 
 		// Remove a section.
@@ -224,7 +227,8 @@ public class UnMix {
 	 * @param pos The starting node location.
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
-		
+		int sLength = s.length();
+		s = s.substring(0, sLength-2);
 		// Insert not complete. Print an error message.
 		if (!message.insertAfter(pos, s))
 			System.out.println("Command Incomplete.");
