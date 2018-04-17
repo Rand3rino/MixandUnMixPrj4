@@ -148,39 +148,47 @@ public class LinkedList {
 			return removed;
 
 		// Invalid input. Section cannot be negative.
-		if (start < 0 || end < 0) 
+		else if (start < 0 || end < 0) 
 			return removed;
 
 		// Case 0: The list does not exist.
-		if (top == null)
+		else if (top == null)
 			return removed;
 
 		// Case 1: The list is not long enough.
-		if (lengthList() <= start)
+		else if (lengthList() <= start)
 			return removed;
 
 		// Case 2: The list is only one and the insert is at zero.
-		if (lengthList() == 1 && start == 0) {
+		else if (lengthList() == 1 && start == 0) {
 			removed = top.getData();
 			top = null;
 			return removed;
 		}
 
 		// Case 3: User enters 0 0. Cut the top node.
-		if (start == 0 && end == 0) {
+		else if (start == 0 && end == 0) {
 			removed = top.getData();
 			top = top.getNext();
 			return removed;
 		}
 
 		//Case 4: Remove a section starting at 0 and having no end
-		if (start == 0 && lengthList() - 1 <= end) {
+		else if (start == 0 && lengthList() - 1 <= end) {
+			Node temp = top;
+			for(int i = 0; i < lengthList()-1; i++) {
+				removed = removed + temp.getData();
+				temp = temp.getNext();
+			}
+			
+			removed = removed + temp.getData();
+			
 			top = null;
 			return removed;
 		}			
 
 		// Case 5: The list can be cut but there is no end section.
-		if(lengthList() > start && lengthList() - 1 <= end) {
+		else if(lengthList() > start && lengthList() - 1 <= end) {
 
 			// This node will be used to move through the list.
 			Node temp = top;
@@ -206,22 +214,25 @@ public class LinkedList {
 
 		// Case 6: Remove a section starting at first node 
 		//and has an end.
-		if (start == 0) {
+		else if (start == 0) {
 
 			// This node will be used to move through the list.
 			Node firstNode = top;
 
 			// Assign the firstNode to the node after the cut.
 			for (int step = 0; step < end+1; step++) {
+				removed = removed + firstNode.getData();
 				firstNode = firstNode.getNext();
+				
 			}
 
 			// Assign the top of the list to the end of the cut.
 			top = firstNode;
+			return removed;
 		}
 
 		// Case 7: The list can be cut and there is an end section.
-		if (lengthList() > start && lengthList() - 1 > end) {
+		else if (lengthList() > start && lengthList() - 1 > end) {
 
 			// This node will be used to move through the list.
 			Node firstNode = top;
@@ -406,10 +417,11 @@ public class LinkedList {
 	 * every other node, from the list of nodes
 	 *****************************************************************/
 	public void removeFerguson() {
-		for(int i = 0; i <= lengthList(); i++) {
+		for(int i = 0; i <= lengthList() ; i++) {
+			System.out.println);
 			//alternate letters
-			if(i > 15)
-				break;
+			if(i > 14)
+				return;
 			if(i == 0) {
 				removeSection(0, 0);
 			}
