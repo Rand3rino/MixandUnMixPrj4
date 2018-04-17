@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Mix {
-	
+
 	/** Variable for the linked list. */
 	private static LinkedList message = new LinkedList();
 
@@ -72,7 +72,7 @@ public class Mix {
 					System.out.println("File could not be created");
 				}
 				break;
-			//insert string
+				//insert string
 			case "b":
 				try {
 					words = scnr.next();
@@ -82,14 +82,14 @@ public class Mix {
 					System.out.println("Incorrect command, please ente"
 							+ "r 'b' followed by a string and the inde"
 							+ "x at which you would like the string in"
-							+ "erted.\nNote that the index must be with"
-							+ "in the length of the string");
+							+ "erted.\nNote that the index must be "
+							+ "within the length of the string");
 					break;
 
 				}
 				mix.insertString(words, toNum);
 				break;
-			//remove section
+				//remove section
 			case "r":
 
 				try {
@@ -105,11 +105,11 @@ public class Mix {
 				}
 				mix.removeChars(toNum, toNum2);
 				break;
-			//display help page
+				//display help page
 			case "H":
 				mix.helpPage();
 				break;
-			//increment ascii values 
+				//increment ascii values 
 			case "a":
 				String s;
 
@@ -117,33 +117,36 @@ public class Mix {
 				try {
 					//checkfor false
 					if(!(mix.incrementAscii(s.charAt(0))))
-							throw new StringIndexOutOfBoundsException();
+						throw new StringIndexOutOfBoundsException();
 				}
 				catch(StringIndexOutOfBoundsException e) {
-					System.out.println("Incorrect command. Please enter 'a'"
-							+ " followed by either '+' or '-'");
+					System.out.println("Incorrect command. Please "
+							+ "enter 'a' followed by either '+' "
+							+ "or '-'");
 					break;
 				}
 				break;
-			//insert ferguson
+				//insert ferguson
 			case "f":
 				message.addFerguson();
 				break;
-			//swap message
+				//swap message
 			case "s":
 				message.SwapHalf();
 				break;
-			//paste from clipboard
+				//paste from clipboard
 			case "p":
 				mix.paste(scnr.nextInt(), scnr.nextInt());
 				break;
-			//copy to clipboard
+				//copy to clipboard
 			case "c":
-				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
+				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr
+						.nextInt());
 				break;
-			//cut to clipboard
+				//cut to clipboard
 			case "x":
-				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr.nextInt());
+				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr
+						.nextInt());
 				break;
 			default:
 				System.out.println("Please enter a valid command. "
@@ -184,10 +187,10 @@ public class Mix {
 		saveCommands("b " + startIndex + " " + endIndex);
 	}
 
-	/**********************************************************************
+	/******************************************************************
 	 *Displays a page to help users learn how to enter their encryption
 	 *commands.
-	 **********************************************************************/
+	 *****************************************************************/
 	public void helpPage() {
 		System.out.println("\n-------Help Page-------");
 		System.out.println("Q: Quits program and saves undo "
@@ -197,8 +200,8 @@ public class Mix {
 		System.out.println("r # *: Deletes from index(#) to "
 				+ "index(*).");
 		System.out.println("H: Displays help page.");
-		System.out.println("a * #: Increments or Decrements(*) (#) "
-				+ "number of times where (#) is less than 5.");
+		System.out.println("a *: Increments or Decrements(*) the ascii"
+				+ " value of each element in the Linked List.");
 		System.out.println("f: Inserts ferguson between alternating "
 				+ "characters.");
 		System.out.println("s: Swaps the message around.");
@@ -211,65 +214,66 @@ public class Mix {
 	}
 
 	/******************************************************************
-	*Method to save the encryption commands to be later used in the 
-	*UnMix program.
-	*
-	*@param str String to hold the encryption commands.
-	******************************************************************/
+	 *Method to save the encryption commands to be later used in the 
+	 *UnMix program.
+	 *
+	 *@param str String to hold the encryption commands.
+	 ******************************************************************/
 	private void saveCommands(String str) {
 		commands = "\n"+ str + commands;
 	}
 
 	/******************************************************************
-	*Method that creates the file to hold encryption commands.
-	*
-	*@param instruction Encryption commands to be stored.
-	******************************************************************/
+	 *Method that creates the file to hold encryption commands.
+	 *
+	 *@param instruction Encryption commands to be stored.
+	 ******************************************************************/
 	private void createFile(String instruction) throws IOException  {
-		BufferedWriter writer = new BufferedWriter(new FileWriter("Key"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(
+				"Key"));
 		writer.write(instruction);
 		writer.close();
 	}
 
 	/******************************************************************
-	*Method to increment the ascii value of the character sent.
-	*
-	*@param ascii Character to be incremented
-	*@return boolean Returns true if action performed else false.
-	******************************************************************/
+	 *Method to increment the ascii value of the character sent.
+	 *
+	 *@param ascii Character to be incremented
+	 *@return boolean Returns true if action performed else false.
+	 ******************************************************************/
 	private boolean incrementAscii(char ascii) {
 		return message.changeAscii(ascii);
 	}
 
 	/******************************************************************
-	*Method to paste given clipboard into linked list at given index.
-	*
-	*@param index Location to paste clipboard into.
-	*@param clipboard Clipboard to be pasted into linked list.
-	******************************************************************/
+	 *Method to paste given clipboard into linked list at given index.
+	 *
+	 *@param index Location to paste clipboard into.
+	 *@param clipboard Clipboard to be pasted into linked list.
+	 ******************************************************************/
 	private void paste(int index, int clipboard) {
 
 	}
 
 	/******************************************************************
-	*Method to copy from linked list into a clipboard.
-	*
-	*@param startIndex Index in linked list to begin copying from.
-	*@param endIndex Index in linked list to end copying from.
-	*@param clipboard Clipboard to paste message into.
-	******************************************************************/
+	 *Method to copy from linked list into a clipboard.
+	 *
+	 *@param startIndex Index in linked list to begin copying from.
+	 *@param endIndex Index in linked list to end copying from.
+	 *@param clipboard Clipboard to paste message into.
+	 ******************************************************************/
 	private void copy(int startIndex, int endIndex, int clipboard) {
 
 	}
 
 	/******************************************************************
-	*Method to cut section from linked list and paste it into the 
-	*clipboard.
-	*
-	*@param startIndex Index to begin cutting from in linked list.
-	*@param endIndex Index to end cutting from in linked list.
-	*@param clipboard Clipboard to paste cut section in.
-	******************************************************************/
+	 *Method to cut section from linked list and paste it into the 
+	 *clipboard.
+	 *
+	 *@param startIndex Index to begin cutting from in linked list.
+	 *@param endIndex Index to end cutting from in linked list.
+	 *@param clipboard Clipboard to paste cut section in.
+	 ******************************************************************/
 	private void cut(int startIndex, int endIndex, int clipboard) {
 
 	}
