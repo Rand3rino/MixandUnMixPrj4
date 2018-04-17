@@ -42,7 +42,7 @@ public class UnMix {
 	 * 	includes the filename and the encrypted message in the format:
 	 *  filename 'encrypted message'.
 	 *****************************************************************/
-	public static void main(String [] args) { // FIXME throws IOException?  {
+	public static void main(String [] args) { 
 
 		// The filename is the first string of args.
 		UnMix.fileName += args[0];
@@ -144,7 +144,7 @@ public class UnMix {
 					reader.close();
 			} 
 			catch (IOException e) {
-				// FIXME Something happens here?
+				System.out.println("File not read.");
 			}
 		}
 
