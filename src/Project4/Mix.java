@@ -19,6 +19,9 @@ public class Mix {
 
 	/** Variable for the linked list. */
 	private static LinkedList message = new LinkedList();
+	
+	/**Variable for the new linked list. */
+	private static NewLinkedList newMessage = new NewLinkedList();
 
 	/** String to hold the users message from the command prompt. */
 	private static String userMessage;
@@ -116,7 +119,7 @@ public class Mix {
 				s = scnr.next();
 				try {
 					//checkfor false
-					if(!(mix.incrementAscii(s.charAt(0))))
+					if(!(mix.changeAscii(s.charAt(0))))
 						throw new StringIndexOutOfBoundsException();
 				}
 				catch(StringIndexOutOfBoundsException e) {
@@ -129,24 +132,21 @@ public class Mix {
 				//insert ferguson
 			case "f":
 				message.addFerguson();
+				mix.saveCommands("f");
 				break;
 				//swap message
 			case "s":
 				message.SwapHalf();
+				mix.saveCommands("s");
 				break;
 				//paste from clipboard
 			case "p":
-				mix.paste(scnr.nextInt(), scnr.nextInt());
 				break;
 				//copy to clipboard
 			case "c":
-				mix.copy(scnr.nextInt(), scnr.nextInt(), scnr
-						.nextInt());
 				break;
 				//cut to clipboard
 			case "x":
-				mix.cut(scnr.nextInt(), scnr.nextInt(), scnr
-						.nextInt());
 				break;
 			default:
 				System.out.println("Please enter a valid command. "
@@ -167,10 +167,13 @@ public class Mix {
 	 *@param pos Position to insert string into linked list.
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
+		int check = s.length();
 		boolean bool = message.insertAfter(pos, s);
-		if (!bool)
+		if (!bool) {
 			System.out.println("Command could not be carried out.");
-		saveCommands("r " + pos + " " + pos);
+			return;
+		}
+		saveCommands("r " + pos + " " + (pos + check - 1));
 	}
 
 	/******************************************************************
@@ -182,9 +185,11 @@ public class Mix {
 	 *****************************************************************/
 	public void removeChars(int startIndex, int endIndex) {
 		String removed = message.removeSection(startIndex, endIndex);
-		if(removed.length() == 0)
+		if(removed.length() == 0) {
 			System.out.println("Command could not be carried out.");
-		saveCommands("b " + startIndex + " " + endIndex);
+			return;
+		}
+		saveCommands("b " + removed + " " + startIndex);
 	}
 
 	/******************************************************************
@@ -241,40 +246,11 @@ public class Mix {
 	 *@param ascii Character to be incremented
 	 *@return boolean Returns true if action performed else false.
 	 ******************************************************************/
-	private boolean incrementAscii(char ascii) {
+	private boolean changeAscii(char ascii) {
+		if(ascii == '+')
+			saveCommands("a -");
+		else
+			saveCommands("a +");
 		return message.changeAscii(ascii);
-	}
-
-	/******************************************************************
-	 *Method to paste given clipboard into linked list at given index.
-	 *
-	 *@param index Location to paste clipboard into.
-	 *@param clipboard Clipboard to be pasted into linked list.
-	 ******************************************************************/
-	private void paste(int index, int clipboard) {
-
-	}
-
-	/******************************************************************
-	 *Method to copy from linked list into a clipboard.
-	 *
-	 *@param startIndex Index in linked list to begin copying from.
-	 *@param endIndex Index in linked list to end copying from.
-	 *@param clipboard Clipboard to paste message into.
-	 ******************************************************************/
-	private void copy(int startIndex, int endIndex, int clipboard) {
-
-	}
-
-	/******************************************************************
-	 *Method to cut section from linked list and paste it into the 
-	 *clipboard.
-	 *
-	 *@param startIndex Index to begin cutting from in linked list.
-	 *@param endIndex Index to end cutting from in linked list.
-	 *@param clipboard Clipboard to paste cut section in.
-	 ******************************************************************/
-	private void cut(int startIndex, int endIndex, int clipboard) {
-
 	}
 }
