@@ -39,6 +39,7 @@ public class Mix {
 	 * 				line.
 	 *****************************************************************/
 	public static void main(String [] args) {
+		
 		Mix.userMessage = "";
 
 		//add command message to string userMessage
@@ -176,7 +177,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("�\\_(*_*)_/� r " + pos + " " + (pos + s.length() - 1 + " �\\_(*_*)_/�"));
+		saveCommands("r " + pos + " " + (pos + s.length() - 1));
 	}
 
 	/******************************************************************
@@ -192,7 +193,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("b " + removed + " " + startIndex);
+		saveCommands("b ///" + removed + "///" + startIndex + " ");
 	}
 
 	/******************************************************************
@@ -263,7 +264,7 @@ public class Mix {
 		if(temp.length() == 0)
 			System.out.println("Command could not be carried out.");
 		else
-			saveCommands("p " + index + " " + temp);
+			saveCommands("r " + index + " " + (index + temp.length()));
 	}
 	
 	private void copy(int startIndex, int endIndex, int clipboardNum) {
@@ -277,6 +278,6 @@ public class Mix {
 		if(temp.length() == 0)
 			System.out.println("Command could not be carried out.");
 		else
-			saveCommands("c " + startIndex + " " + endIndex);
+			saveCommands("b ///" + temp + "///" + startIndex + " ");
 	}
 }
