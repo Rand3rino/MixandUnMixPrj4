@@ -12,7 +12,6 @@
 package Project4;
 import java.io.*;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class UnMix {
 
@@ -174,7 +173,8 @@ public class UnMix {
 			String word = scnr.next();
 			System.out.println("_" + word + "_");
 			scnr.useDelimiter("\\s");
-			unMix.insertString(word, Integer.parseInt(scnr.next().substring(3)));
+			unMix.insertString(word, Integer.parseInt(scnr.next()
+					.substring(3)));
 			break;
 
 		// Remove a section.
