@@ -36,51 +36,6 @@ public class NewLinkedList {
 	}
 
 	/******************************************************************
-	 * Method to print out the linked list in a formatted version with
-	 * the number of the position above each node.
-	 *****************************************************************/
-	public void display() {
-		Node temp = top;
-
-		System.out.print ("Message:\n");
-		for (int i = 0; i < lengthList(); i++) { 
-			System.out.format ("%3d", i);
-
-		}
-		System.out.format ("\n");
-		for (int i = 0; i < lengthList(); i++)  {
-			System.out.format("%3c", temp.getData().charAt(0));
-			temp = temp.getNext();
-		}
-		System.out.format ("\n");
-	}
-
-	/******************************************************************
-	 * Method to add a string to the end of the linked list.
-	 * 
-	 * @param s Data of type string to be added to end of the linked 
-	 * 			list.
-	 *****************************************************************/
-	public void append(String s) {
-
-		// Case 0: The list does not exist.
-		if (top == null) {
-			addAtTop(s);
-			return;
-		}
-
-		// Case 1: at Least one item in list
-		else {
-			Node temp = top;
-			while (temp.getNext() != null) {
-				temp = temp.getNext();
-			}
-			temp.setNext(new Node(s, null));
-		}
-
-	}
-
-	/******************************************************************
 	 * This method will remove a node that is the first occurrence of 
 	 * the given string.
 	 * 
@@ -248,7 +203,13 @@ public class NewLinkedList {
 		return removed;
 	}
 
-	//FIXME: Modify to copy section not remove section
+	/******************************************************************
+	 * Method to copy a given section from the Linked List.
+	 * 
+	 * @param start Position to begin copying from.
+	 * @param end Position to end copying form
+	 * @return A string with the section copied.
+	 *****************************************************************/
 	public String copySection(int start, int end) {
 		String removed = "";
 		Node temp = top;
@@ -269,19 +230,19 @@ public class NewLinkedList {
 		if (lengthList() <= start)
 			return removed;
 
-		// Case 2: The list is only one and the insert is at zero.
+		// Case 2: The list is only one and the copy is at zero.
 		if (lengthList() == 1 && start == 0) {
 			removed = top.getData();
 			return removed;
 		}
 
-		// Case 3: User enters 0 0. Cut the top node.
+		// Case 3: User enters 0 0. Copy the top node.
 		if (start == 0 && end == 0) {
 			removed = top.getData();
 			return removed;
 		}
 
-		//Case 4: Remove a section starting at 0 and having no end
+		//Case 4: Copy a section starting at 0 and having no end
 		if (start == 0 && lengthList() - 1 <= end) {
 			temp = top;
 			removed += temp.getData();
@@ -294,13 +255,13 @@ public class NewLinkedList {
 			return removed;
 		}			
 
-		// Case 5: The list can be cut but there is no end section.
+		// Case 5: The list can be copied but there is no end section.
 		if(lengthList() > start && lengthList() - 1 <= end) {
 
 			// This node will be used to move through the list.
 			temp = top;
 
-			// Assign temp to the last position before the cut.
+			// Assign temp to the last position before the copy.
 			for (int step = 0; step < start - 1; step++) {
 				temp = temp.getNext();
 			}
@@ -314,11 +275,11 @@ public class NewLinkedList {
 			return removed;
 		}
 
-		// Case 6: Remove a section starting at first node 
+		// Case 6: Copu a section starting at first node 
 		//and has an end.
 		if (start == 0) {
 
-			// Assign the firstNode to the node after the cut.
+			// Assign the firstNode to the node after the copy.
 			for (int step = 0; step < end+1; step++) {
 				removed = temp.getData();
 				temp = temp.getNext();
@@ -327,17 +288,17 @@ public class NewLinkedList {
 			return removed;
 		}
 
-		// Case 7: The list can be cut and there is an end section.
+		// Case 7: The list can be copied and there is an end section.
 		if (lengthList() > start && lengthList() - 1 > end) {
 
 			// This node will be used to move through the list.
 			temp = top;
 
-			// Assign firstNode to the position before the cut.
+			// Assign temp to the beginning of the section to be copied
 			for (int step = 0; step < start - 1; step++)
 				temp = temp.getNext();
 
-			// Assign secondNode to the position after the cut.
+			// Assign secondNode to the position after the copy.
 			for (int step = 0; step < end - start + 1; step++) {
 				removed = removed + temp.getData();
 				temp = temp.getNext();
@@ -346,7 +307,7 @@ public class NewLinkedList {
 			return removed;
 		}
 
-		// Default: A section could not be removed.
+		// Default: A section could not be copied.
 		return removed;
 	}
 
