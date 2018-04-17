@@ -231,7 +231,7 @@ public class LinkedList {
 
 			// Assign firstNode to the position before the cut.
 			for (int step = 0; step < start - 1; step++) {
-				removed = removed + firstNode.getData();
+				//removed = removed + firstNode.getData();
 				firstNode = firstNode.getNext();
 			}
 

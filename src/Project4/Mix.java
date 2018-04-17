@@ -167,13 +167,12 @@ public class Mix {
 	 *@param pos Position to insert string into linked list.
 	 *****************************************************************/
 	public void insertString(String s, int pos) {
-		int check = s.length();
 		boolean bool = message.insertAfter(pos, s);
 		if (!bool) {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("r " + pos + " " + (pos + check - 1));
+		saveCommands("r " + pos + " " + (pos + s.length() - 1));
 	}
 
 	/******************************************************************
