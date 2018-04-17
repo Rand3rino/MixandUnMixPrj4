@@ -4,7 +4,7 @@ public class NewLinkedList {
 
 	/** The top node of the linked list. */
 	private Node top;
-	
+
 	/** FIXME */
 	private NewNode clipboard;
 
@@ -247,10 +247,11 @@ public class NewLinkedList {
 		// Default: A section could not be removed.
 		return removed;
 	}
-	
+
 	//FIXME: Modify to copy section not remove section
 	public String copySection(int start, int end) {
 		String removed = "";
+		Node temp = top;
 
 		// Invalid input. End cannot be before start.
 		if (start > end)
@@ -271,20 +272,25 @@ public class NewLinkedList {
 		// Case 2: The list is only one and the insert is at zero.
 		if (lengthList() == 1 && start == 0) {
 			removed = top.getData();
-			top = null;
 			return removed;
 		}
 
 		// Case 3: User enters 0 0. Cut the top node.
 		if (start == 0 && end == 0) {
 			removed = top.getData();
-			top = top.getNext();
 			return removed;
 		}
 
 		//Case 4: Remove a section starting at 0 and having no end
 		if (start == 0 && lengthList() - 1 <= end) {
-			top = null;
+			temp = top;
+			removed += temp.getData();
+
+			//loop through linked list and copy message
+			for(int i = 0; i < lengthList(); i++) {
+				temp = temp.getNext();
+				removed += temp.getData();
+			}
 			return removed;
 		}			
 
@@ -292,23 +298,18 @@ public class NewLinkedList {
 		if(lengthList() > start && lengthList() - 1 <= end) {
 
 			// This node will be used to move through the list.
-			Node temp = top;
+			temp = top;
 
 			// Assign temp to the last position before the cut.
 			for (int step = 0; step < start - 1; step++) {
 				temp = temp.getNext();
 			}
 
-			Node delete = temp;
-
 			//Get the value of the last positions
 			for(int step = start; step <= end; step++) {
-				removed = removed + temp.getData();
+				removed += temp.getData();
 				temp = temp.getNext();
 			}
-
-			// Set the end of the list.
-			delete.setNext(null);
 
 			return removed;
 		}
@@ -317,45 +318,31 @@ public class NewLinkedList {
 		//and has an end.
 		if (start == 0) {
 
-			// This node will be used to move through the list.
-			Node firstNode = top;
-
 			// Assign the firstNode to the node after the cut.
 			for (int step = 0; step < end+1; step++) {
-				firstNode = firstNode.getNext();
+				removed = temp.getData();
+				temp = temp.getNext();
 			}
 
-			// Assign the top of the list to the end of the cut.
-			top = firstNode;
+			return removed;
 		}
 
 		// Case 7: The list can be cut and there is an end section.
 		if (lengthList() > start && lengthList() - 1 > end) {
 
 			// This node will be used to move through the list.
-			Node firstNode = top;
-
-			// This node is the top of the second part of the list.
-			Node secondNode;
+			temp = top;
 
 			// Assign firstNode to the position before the cut.
-			for (int step = 0; step < start - 1; step++) {
-				removed = removed + firstNode.getData();
-				firstNode = firstNode.getNext();
-			}
-
-			// Start secondNode after firstNode.
-			secondNode = firstNode.getNext();
+			for (int step = 0; step < start - 1; step++)
+				temp = temp.getNext();
 
 			// Assign secondNode to the position after the cut.
 			for (int step = 0; step < end - start + 1; step++) {
-				removed = removed + secondNode.getData();
-				secondNode = secondNode.getNext();
+				removed = removed + temp.getData();
+				temp = temp.getNext();
 			}
 
-			// Direct the firstNode to the Second Node, 
-			// removing all in between.
-			firstNode.setNext(secondNode);
 			return removed;
 		}
 
@@ -478,7 +465,7 @@ public class NewLinkedList {
 
 		return length;
 	}
-	
+
 
 	/******************************************************************
 	 *Method to paste given clipboard into linked list at given index.
@@ -486,9 +473,47 @@ public class NewLinkedList {
 	 *@param index Location to paste clipboard into.
 	 *@param clipboard Clipboard to be pasted into linked list.
 	 ******************************************************************/
-	private void paste(int index, int clipboard) {
+	public String paste(int index, int clipboardNum) {
 		//take message from the given clipboard and using insertAfter method
 		//paste the message into Linked List
+		String removed = "";
+		NewNode temp = clipboard.getNewTop();
+		Node temp1;
+
+		//Case 0: No clip board.
+		if(temp == null)
+			return removed;
+
+		//Case 1: If the first clipboard is the desired clipboard.
+		if(temp.getClipboardNumber() == clipboardNum) {
+			removed += temp.getTop().getData();
+			temp1 = temp.getTop();
+
+			//loop through rest of linked list and get data
+			while(temp1.getNext().getData() != null)
+				removed += temp1.getNext().getData();
+
+			if(!insertAfter(index, removed))
+				return "";
+		}
+
+		//Case 2: ClipboardNum is not the first node.
+		while(temp.getNext() != null) {
+			if(temp.getClipboardNumber() == clipboardNum) {
+				removed += temp.getTop().getData();
+				temp1 = temp.getTop();
+
+				//loop through rest of linked list and get data
+				while(temp1.getNext().getData() != null)
+					removed += temp1.getNext().getData();
+
+				if(!insertAfter(index, removed))
+					return "";
+			}
+			temp = temp.getNewTop();
+		}
+
+		return removed;
 	}
 
 	/******************************************************************
@@ -498,10 +523,35 @@ public class NewLinkedList {
 	 *@param endIndex Index in linked list to end copying from.
 	 *@param clipboard Clipboard to paste message into.
 	 ******************************************************************/
-	private void copy(int startIndex, int endIndex, int clipboard) {
-		//copy this section into clipboard
-		String temp = removeSection(startIndex, endIndex);
+	public void copy(int startIndex, int endIndex, int clipboardNum) {
+		String temp = copySection(startIndex, endIndex);
+		Node temp1 = top;		
+		NewNode end = clipboard.getNewTop();
 
+		//if the New Linked List is empty
+		if(end == null)
+			end = new NewNode(clipboardNum, null, top);
+		
+		//if the New Linked List is one element long
+		else if(end.getNext() == null)
+			end.setNext(new NewNode(clipboardNum, null, top));
+		
+		//if the New Linked List is more than one element
+		else {
+
+			//loop to end of NewLinkedList
+			while(end.getNext() != null) 
+				end = end.getNext();
+			end.setNext(new NewNode(clipboardNum, null, top));
+		}
+
+		//add copied message to New Linked List
+		top.setData(temp.substring(0, 1));
+		temp1 = top;
+		for(int i = 0; i < temp.length(); i++) {
+			temp1.setNext(new Node(temp.substring(i, i+1), null));
+			temp1 = temp1.getNext();
+		}
 	}
 
 	/******************************************************************
@@ -512,9 +562,9 @@ public class NewLinkedList {
 	 *@param endIndex Index to end cutting from in linked list.
 	 *@param clipboard Clipboard to paste cut section in.
 	 ******************************************************************/
-	private void cut(int startIndex, int endIndex, int clipboard) {
-		//FIXME: Needs to return section cut so that it can be pasted into the clipboard
-		removeSection(startIndex, endIndex);
-		//paste section cut into NewLinkedList
+	public String cut(int startIndex, int endIndex, int clipboardNum) {
+		copy(startIndex, endIndex, clipboardNum);
+		
+		return removeSection(startIndex, endIndex);	
 	}
 }
