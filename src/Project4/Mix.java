@@ -175,7 +175,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("¯\\_(*_*)_/¯ r " + pos + " " + (pos + s.length() - 1 + " ¯\\_(*_*)_/¯"));
+		saveCommands("r " + pos + " " + (pos + s.length() - 1));
 	}
 
 	/******************************************************************
@@ -191,7 +191,7 @@ public class Mix {
 			System.out.println("Command could not be carried out.");
 			return;
 		}
-		saveCommands("b " + removed + " " + startIndex);
+		saveCommands("b ///" + removed + "///" + startIndex + " ");
 	}
 
 	/******************************************************************
