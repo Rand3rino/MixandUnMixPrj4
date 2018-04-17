@@ -418,7 +418,6 @@ public class LinkedList {
 	 *****************************************************************/
 	public void removeFerguson() {
 		for(int i = 0; i <= lengthList() ; i++) {
-			System.out.println);
 			//alternate letters
 			if(i > 14)
 				return;
