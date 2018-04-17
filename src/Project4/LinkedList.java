@@ -541,7 +541,7 @@ public class LinkedList {
 	public void displayMessage() {
 		Node temp = top;
 		for (int i = 0; i < lengthList(); i++){
-			System.out.println(temp.getData().charAt(0));
+			System.out.print(temp.getData().charAt(0));
 			temp = temp.getNext();
 		}
 	}

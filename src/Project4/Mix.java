@@ -162,8 +162,9 @@ public class Mix {
 			message.display();
 		}while(!command.equals("Q"));
 		
-		System.out.print("Copy this into UnMix: " + filename + " '"
-				+ message.displayNormal() + "' ");
+		System.out.print("Copy this into UnMix: " + filename + " '");
+		message.displayMessage();
+		System.out.print("' ");
 	}
 
 	/******************************************************************
