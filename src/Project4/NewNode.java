@@ -23,9 +23,9 @@ public class NewNode {
 	/** A NewNode for the next element in the Linked List. */
 	private NewNode next;
 	
-	/** FIXME */
-	private Node List;
-	
+	/** First node in New Linked List. */
+	private NewNode newTop;
+
 	/** Reference for the top of each clipboard. */
 	private Node top;
 	
@@ -40,12 +40,9 @@ public class NewNode {
 	 * @param list FIXME
 	 * @param top A Node for the current clipboard number Linked List.
 	 ******************************************************************/
-	public NewNode(String data, int clipboardNumber, NewNode next,
-			Node list, Node top) {
-		this.data = data;
+	public NewNode(int clipboardNumber, NewNode next, Node top) {
 		this.clipboardNumber = clipboardNumber;
 		this.next = next;
-		List = list;
 		this.top = top;
 	}
 	
@@ -125,20 +122,22 @@ public class NewNode {
 	}
 	
 	/******************************************************************
-	 * FIXME
+	 * Get method for NewNode top which is the first node in New 
+	 * Linked List.
 	 * 
-	 * @return
+	 * @return The top node in New Linked List
 	 *****************************************************************/
-	public Node getList() {
-		return List;
+	public NewNode getNewTop() {
+		return newTop;
 	}
-	
+
 	/******************************************************************
-	 * FIXME
+	 * Set method for the New Node top.
 	 * 
-	 * @param list
+	 * @param newTop A NewNode that is the first node in New Linked 
+	 * 					List.
 	 *****************************************************************/
-	public void setList(Node list) {
-		List = list;
+	public void setNewTop(NewNode newTop) {
+		this.newTop = newTop;
 	}
 }
